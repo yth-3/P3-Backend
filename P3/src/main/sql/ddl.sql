@@ -32,15 +32,14 @@ CREATE TABLE users (
 
 CREATE TABLE claims (
 	claim_id VARCHAR(255) primary key,
-	submitter_id VARCHAR(255) references users(user_id),
+	submitter_id VARCHAR(255) not null references users(user_id),
 	submitted TIMESTAMP not null,
 	claimed NUMERIC(10,2) not null,
-	type_id VARCHAR(255) references claim_types(type_id),
+	type_id VARCHAR(255) not null references claim_types(type_id),
 	description VARCHAR(255) not null,
 	receipt OID,
 	resolver_id VARCHAR(255) references users(user_id),
 	resolved TIMESTAMP,
-	settled numeric(10,2) not null,
-	status_id VARCHAR(255) references claim_statuses(status_id)
+	settled NUMERIC(10,2) not null,
+	status_id VARCHAR(255) not null references claim_statuses(status_id)
 );
-
