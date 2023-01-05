@@ -4,6 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "user_roles")
 public class Role {
 }
