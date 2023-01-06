@@ -1,6 +1,6 @@
 # Configuration Files
 P3/src/main/resources/application.yaml
-P3/src/main/resources/resource.properties
+P3/src/main/resources/application.properties
 
 # intellij idea specific files
 .idea*
