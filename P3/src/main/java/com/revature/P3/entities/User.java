@@ -32,5 +32,4 @@ public class User {
     )
     @JsonBackReference
     private Role role;
-
 }
