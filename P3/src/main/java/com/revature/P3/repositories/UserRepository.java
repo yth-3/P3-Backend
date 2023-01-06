@@ -1,7 +1,9 @@
 package com.revature.P3.repositories;
 
+import com.revature.P3.entities.User;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository {
+public interface UserRepository extends CrudRepository<User, String> {
 }
