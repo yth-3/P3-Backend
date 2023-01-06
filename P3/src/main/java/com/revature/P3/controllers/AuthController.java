@@ -8,6 +8,7 @@ import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
