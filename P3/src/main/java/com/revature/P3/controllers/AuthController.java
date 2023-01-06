@@ -22,6 +22,9 @@ public class AuthController {
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Principal login(@RequestBody(required = false) NewLoginRequest req) {
+        if (req == null) {
+            throw new InvalidAuthException();
+        }
         throw new InvalidAuthException();
     }
 
