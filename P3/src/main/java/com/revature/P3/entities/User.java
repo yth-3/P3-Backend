@@ -31,5 +31,6 @@ public class User {
             name = "role_id"
     )
     @JsonBackReference
-    private Role roleId;
+    private Role role;
+
 }

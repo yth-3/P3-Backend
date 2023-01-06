@@ -17,7 +17,7 @@ public class Claim {
             nullable = false
     )
     @JsonBackReference
-    private User submitterId;
+    private User submitter;
 
     @Column(name = "submitted", nullable = false)
     private Timestamp submitted;
@@ -31,7 +31,7 @@ public class Claim {
             nullable = false
     )
     @JsonBackReference
-    private ClaimType typeId;
+    private ClaimType type;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -44,7 +44,7 @@ public class Claim {
             name = "resolver_id"
     )
     @JsonBackReference
-    private User resolverId;
+    private User resolver;
 
     @Column(name = "resolved")
     private Timestamp resolved;
@@ -58,5 +58,5 @@ public class Claim {
             nullable = false
     )
     @JsonBackReference
-    private ClaimStatus statusId;
+    private ClaimStatus status;
 }
