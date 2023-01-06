@@ -1,5 +1,7 @@
 package com.revature.P3.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -9,8 +11,13 @@ public class Claim {
     @Id
     private String claimId;
 
-    @Column(name = "submitter_id", nullable = false)
-    private String submitterId;
+    @ManyToOne
+    @JoinColumn(
+            name = "submitter_id",
+            nullable = false
+    )
+    @JsonBackReference
+    private User submitterId;
 
     @Column(name = "submitted", nullable = false)
     private Timestamp submitted;
@@ -18,8 +25,13 @@ public class Claim {
     @Column(name = "claimed", nullable = false)
     private Double claimed;
 
-    @Column(name = "type_id", nullable = false)
-    private String typeId;
+    @ManyToOne
+    @JoinColumn(
+            name = "type_id",
+            nullable = false
+    )
+    @JsonBackReference
+    private ClaimType typeId;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -27,8 +39,12 @@ public class Claim {
     @Column(name = "receipt")
     private byte[] receipt;
 
-    @Column(name = "resolver_id")
-    private String resolverId;
+    @ManyToOne
+    @JoinColumn(
+            name = "resolver_id"
+    )
+    @JsonBackReference
+    private User resolverId;
 
     @Column(name = "resolved")
     private Timestamp resolved;
@@ -36,6 +52,11 @@ public class Claim {
     @Column(name = "settled", nullable = false)
     private Double settled;
 
-    @Column(name = "status_id", nullable = false)
-    private String statusId;
+    @ManyToOne
+    @JoinColumn(
+            name = "status_id",
+            nullable = false
+    )
+    @JsonBackReference
+    private ClaimStatus statusId;
 }

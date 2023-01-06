@@ -1,5 +1,7 @@
 package com.revature.P3.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -24,6 +26,10 @@ public class User {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "role_id")
-    private String roleId;
+    @ManyToOne
+    @JoinColumn(
+            name = "role_id"
+    )
+    @JsonBackReference
+    private Role roleId;
 }
