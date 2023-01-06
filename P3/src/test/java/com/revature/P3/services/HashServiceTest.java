@@ -13,9 +13,9 @@ public class HashServiceTest {
 
     @Test
     public void test_simpleHashTest_hash() {
-        String hashed = sut.hash(password);
-        String hashedLongPassword = sut.hash(longPassword);
-        String hashedShortPassword = sut.hash(shortPassword);
+        String hashed = sut.getHash(password);
+        String hashedLongPassword = sut.getHash(longPassword);
+        String hashedShortPassword = sut.getHash(shortPassword);
         assertFalse(password == hashed);
         assertFalse(longPassword == hashedLongPassword);
         assertFalse(shortPassword == hashedShortPassword);
@@ -23,10 +23,10 @@ public class HashServiceTest {
 
     @Test
     public void test_verifiableHashTest_hash() {
-        String hashed1 = sut.hash(password);
-        String hashed2 = sut.hash(password);
-        String hashed3 = sut.hash(longPassword);
-        String hashed4 = sut.hash(shortPassword);
+        String hashed1 = sut.getHash(password);
+        String hashed2 = sut.getHash(password);
+        String hashed3 = sut.getHash(longPassword);
+        String hashed4 = sut.getHash(shortPassword);
         assertTrue(sut.verify(hashed1, password));
         assertTrue(sut.verify(hashed2, password));
         assertTrue(sut.verify(hashed3, longPassword));
@@ -35,6 +35,6 @@ public class HashServiceTest {
 
     @Test
     public void test_dealingWithNullPassword_hash() {
-        assertThrows(NullPointerException.class, () -> sut.hash(nullPassword));
+        assertThrows(NullPointerException.class, () -> sut.getHash(nullPassword));
     }
 }

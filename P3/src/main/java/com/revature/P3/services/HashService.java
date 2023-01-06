@@ -6,7 +6,7 @@ import de.mkammerer.argon2.Argon2Factory;
 public class HashService {
     private static Argon2 argon2 = Argon2Factory.create();
 
-    public static String hash(String plain) {
+    public static String getHash(String plain) {
         String hash = argon2.hash(10, 65536, 1, plain.toCharArray());
         return hash;
     }
