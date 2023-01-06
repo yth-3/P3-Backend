@@ -1,3 +1,10 @@
-
+# Configuration Files
 P3/src/main/resources/application.yaml
 P3/src/main/resources/resource.properties
+
+# intellij idea specific files
+.idea*
+P3/P3.iml
+
+# build directory
+P3/target*
