@@ -22,7 +22,26 @@ public class AuthController {
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Principal login(@RequestBody(required = false) NewLoginRequest req) {
-        throw new InvalidAuthException();
+        if (req == null) {
+            throw new InvalidAuthException();
+        }
+
+        Principal principal = null;
+        try {
+            principal = userService.loginUser(req);
+        }
+        catch (Exception exception) {
+            //
+        }
+
+        if (principal == null) {
+            throw new InvalidAuthException();
+        }
+
+        String token = tokenService.createNewToken(principal);
+        principal.setToken(token);
+
+        return principal;
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
