@@ -7,4 +7,7 @@ import javax.persistence.*;
 public class ClaimType {
     @Id
     private String typeId;
+
+    @Column(name = "type")
+    private String type;
 }

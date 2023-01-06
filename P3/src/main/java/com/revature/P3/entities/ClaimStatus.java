@@ -7,4 +7,7 @@ import javax.persistence.*;
 public class ClaimStatus {
     @Id
     private String statusId;
+
+    @Column(name = "status")
+    private String status;
 }

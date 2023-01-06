@@ -7,4 +7,7 @@ import javax.persistence.*;
 public class Role {
     @Id
     private String roleId;
+
+    @Column(name = "role")
+    private String role;
 }
