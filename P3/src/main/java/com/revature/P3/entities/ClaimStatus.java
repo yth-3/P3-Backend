@@ -10,4 +10,36 @@ public class ClaimStatus {
 
     @Column(name = "status", nullable = false)
     private String status;
+
+    public ClaimStatus() {
+    }
+
+    public ClaimStatus(String statusId, String status) {
+        this.statusId = statusId;
+        this.status = status;
+    }
+
+    public String getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(String statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "ClaimStatus{" +
+                "statusId='" + statusId + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
