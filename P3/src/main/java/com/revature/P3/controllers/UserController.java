@@ -37,6 +37,15 @@ public class UserController {
         throw new InvalidAuthException();
     }
 
+    @PutMapping(path="deactivate/{userId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deactivateUser(@PathVariable(name="userId") String userId, HttpServletRequest req) {
+        String token = req.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        throw new InvalidAuthException();
+    }
+
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidUserException.class)
     public InvalidUserException handleInvalidUserException (InvalidUserException exception) {
