@@ -8,6 +8,6 @@ public class ClaimType {
     @Id
     private String typeId;
 
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private String type;
 }

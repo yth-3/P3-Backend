@@ -9,19 +9,19 @@ public class Claim {
     @Id
     private String claimId;
 
-    @Column(name = "submitter_id")
+    @Column(name = "submitter_id", nullable = false)
     private String submitterId;
 
-    @Column(name = "submitted")
+    @Column(name = "submitted", nullable = false)
     private Timestamp submitted;
 
-    @Column(name = "claimed")
+    @Column(name = "claimed", nullable = false)
     private Double claimed;
 
-    @Column(name = "type_id")
+    @Column(name = "type_id", nullable = false)
     private String typeId;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "receipt")
@@ -33,9 +33,9 @@ public class Claim {
     @Column(name = "resolved")
     private Timestamp resolved;
 
-    @Column(name = "settled")
+    @Column(name = "settled", nullable = false)
     private Double settled;
 
-    @Column(name = "status_id")
+    @Column(name = "status_id", nullable = false)
     private String statusId;
 }

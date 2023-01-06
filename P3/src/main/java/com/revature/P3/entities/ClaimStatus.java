@@ -8,6 +8,6 @@ public class ClaimStatus {
     @Id
     private String statusId;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private String status;
 }

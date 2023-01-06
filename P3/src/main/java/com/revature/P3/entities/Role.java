@@ -8,6 +8,6 @@ public class Role {
     @Id
     private String roleId;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     private String role;
 }
