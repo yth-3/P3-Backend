@@ -15,9 +15,10 @@ public class HashServiceTest {
     }
 
     @Test
-    public void test_deterministicHashTest_hash() {
+    public void test_verifiableHashTest_hash() {
         String hashed1 = sut.hash(password);
         String hashed2 = sut.hash(password);
-        assertTrue(hashed1.equals(hashed2));
+        assertTrue(sut.verify(hashed1, password));
+        assertTrue(sut.verify(hashed2, password));
     }
 }
