@@ -45,7 +45,7 @@ public class AuthController {
         return principal;
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
     public InvalidAuthException handleInvalidAuthException (InvalidAuthException exception) {
         return exception;
