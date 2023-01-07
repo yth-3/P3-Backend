@@ -32,6 +32,15 @@ public class ClaimController {
         throw new InvalidClaimException();
     }
 
+    @PutMapping(path="approve/{claimId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void approveClaim(@PathVariable(name="claimId") String claimId, HttpServletRequest req) {
+        String token = req.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        throw new InvalidAuthException();
+    }
+
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
     public InvalidAuthException handleInvalidAuthException (InvalidAuthException exception) {
