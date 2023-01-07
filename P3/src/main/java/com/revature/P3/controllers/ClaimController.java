@@ -1,7 +1,9 @@
 package com.revature.P3.controllers;
 
+import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
+import com.revature.P3.utils.custom_exceptions.InvalidClaimException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,24 @@ public class ClaimController {
         throw new InvalidAuthException();
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createClaim(@RequestBody(required = false) NewClaimRequest claimReq, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        throw new InvalidClaimException();
+    }
+
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
     public InvalidAuthException handleInvalidAuthException (InvalidAuthException exception) {
+        return exception;
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(InvalidClaimException.class)
+    public InvalidClaimException handleInvalidClaimException (InvalidClaimException exception) {
         return exception;
     }
 }
