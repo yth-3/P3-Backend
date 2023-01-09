@@ -1,5 +1,7 @@
 package com.revature.P3.entities;
 
+import com.revature.P3.utils.custom_exceptions.InvalidUserException;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,29 @@ public class Role {
     private String role;
 
     public Role() {
+    }
+
+    public Role(String roleId) {
+        this.roleId = roleId;
+
+        if (roleId.equals("0")) {
+            this.role = "Patient";
+        }
+        else if (roleId.equals("1")) {
+            this.role = "Nurse";
+        }
+        else if (roleId.equals("2")) {
+            this.role = "Doctor";
+        }
+        else if (roleId.equals("3")) {
+            this.role = "Insurer";
+        }
+        else if (roleId.equals("4")) {
+            this.role = "Admin";
+        }
+        else {
+            throw new InvalidUserException();
+        }
     }
 
     public Role(String roleId, String role) {
