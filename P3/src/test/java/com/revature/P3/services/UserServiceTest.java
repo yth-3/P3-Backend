@@ -40,9 +40,8 @@ public class UserServiceTest {
     public void test_simpleValidLogin_login() {
         Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenReturn(user);
 
-        User u = sut.loginUser(req);
+        Principal p = sut.loginUser(req);
 
-        assertFalse(u == null);
-        assertTrue(HashService.verify(u.getPassword(), req.getPassword()));
+        assertFalse(p == null);
     }
 }
