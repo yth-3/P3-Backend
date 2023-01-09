@@ -26,9 +26,66 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody(required = false) NewUserRequest req) {
+    public void createPatient(@RequestBody(required = false) NewUserRequest req) {
         try {
-            userService.createUser(req);
+            userService.createPatient(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
+    @PostMapping(path="nurse")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNurse(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
+        try {
+            userService.createNurse(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
+    @PostMapping(path="doctor")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createDoctor(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
+        try {
+            userService.createDoctor(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
+    @PostMapping(path="insurer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createInsurer(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
+        try {
+            userService.createInsurer(req);
         }
         catch (InvalidUserException exception) {
             throw new InvalidUserException();
