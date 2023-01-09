@@ -25,10 +25,26 @@ public class UserService {
         return null;
     }
 
-    public void createUser(NewUserRequest req) {
+    public void createPatient(NewUserRequest req) {
+        this.createUser(req, Roles.Patient);
+    }
+
+    public void createNurse(NewUserRequest req) {
+        this.createUser(req, Roles.Nurse);
+    }
+
+    public void createDoctor(NewUserRequest req) {
+        this.createUser(req, Roles.Doctor);
+    }
+
+    public void createInsurer(NewUserRequest req) {
+        this.createUser(req, Roles.Insurer);
+    }
+
+    private void createUser(NewUserRequest req, Roles role) {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
-        Role newRole = new Role(Roles.Patient);
+        Role newRole = new Role(role);
         try {
             User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
             userRepository.save(newUser);
