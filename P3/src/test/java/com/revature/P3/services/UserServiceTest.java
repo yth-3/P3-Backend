@@ -5,6 +5,7 @@ import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
 import com.revature.P3.repositories.UserRepository;
+import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -50,9 +51,15 @@ public class UserServiceTest {
         req.setPassword("randomPassword");
         Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenReturn(user);
 
-        Principal p = sut.loginUser(req);
+        boolean test = false;
+        try {
+            Principal p = sut.loginUser(req);
+        }
+        catch (InvalidAuthException exception) {
+            test = true;
+        }
 
-        assertTrue(p == null);
+        assertTrue(test);
     }
 
     @Test
@@ -60,8 +67,14 @@ public class UserServiceTest {
         req.setPassword("randomPassword");
         Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenThrow(RuntimeException.class);
 
-        Principal p = sut.loginUser(req);
+        boolean test = false;
+        try {
+            Principal p = sut.loginUser(req);
+        }
+        catch (InvalidAuthException exception) {
+            test = true;
+        }
 
-        assertTrue(p == null);
+        assertTrue(test);
     }
 }
