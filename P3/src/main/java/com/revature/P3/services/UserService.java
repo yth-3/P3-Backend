@@ -5,6 +5,7 @@ import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserService {
     public void createUser(NewUserRequest req) {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
-        Role newRole = new Role("0");
+        Role newRole = new Role(Roles.Patient);
         try {
             User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
             userRepository.save(newUser);
