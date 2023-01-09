@@ -4,6 +4,7 @@ import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.User;
 import com.revature.P3.services.TokenService;
+import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.http.HttpStatus;
@@ -16,15 +17,22 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final TokenService tokenService;
+    private final UserService userService;
 
-    public UserController(TokenService tokenService) {
+    public UserController(TokenService tokenService, UserService userService) {
         this.tokenService = tokenService;
+        this.userService = userService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody(required = false) NewUserRequest req) {
-        throw new InvalidUserException();
+        try {
+            userService.createUser(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
     }
 
     @GetMapping
