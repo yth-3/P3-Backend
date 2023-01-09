@@ -3,6 +3,7 @@ package com.revature.P3.controllers;
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.Roles;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
@@ -44,7 +45,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Admin")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         try {
             userService.createNurse(req);
@@ -63,7 +64,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Admin")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         try {
             userService.createDoctor(req);
@@ -82,7 +83,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Admin")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         try {
             userService.createInsurer(req);
@@ -101,7 +102,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Admin")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
@@ -115,7 +116,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Admin")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
@@ -129,7 +130,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Admin")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
