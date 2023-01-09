@@ -4,6 +4,7 @@ import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.User;
 import com.revature.P3.enums.Roles;
+import com.revature.P3.services.HashService;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
@@ -29,6 +30,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createPatient(@RequestBody(required = false) NewUserRequest req) {
         try {
+            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createPatient(req);
         }
         catch (InvalidUserException exception) {
@@ -48,6 +50,7 @@ public class UserController {
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         try {
+            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createNurse(req);
         }
         catch (InvalidUserException exception) {
@@ -67,6 +70,7 @@ public class UserController {
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         try {
+            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createDoctor(req);
         }
         catch (InvalidUserException exception) {
@@ -86,6 +90,7 @@ public class UserController {
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         try {
+            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createInsurer(req);
         }
         catch (InvalidUserException exception) {
