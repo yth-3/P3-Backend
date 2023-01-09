@@ -10,6 +10,14 @@ public class Principal {
     public Principal() {
     }
 
+    public Principal(String userId, String username, String email, String role) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.token = null;
+    }
+
     public Principal(String userId, String username, String email, String role, String token) {
         this.userId = userId;
         this.username = username;
