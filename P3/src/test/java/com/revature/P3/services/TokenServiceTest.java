@@ -1,12 +1,10 @@
 package com.revature.P3.services;
 
-import antlr.Token;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.utils.JwtConfig;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import javax.crypto.spec.SecretKeySpec;
