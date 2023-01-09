@@ -1,7 +1,9 @@
 package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewUserRequest;
+import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.User;
+import com.revature.P3.services.TokenService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final TokenService tokenService;
+
+    public UserController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody(required = false) NewUserRequest req) {
@@ -25,6 +33,11 @@ public class UserController {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
 
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
         throw new InvalidAuthException();
     }
 
@@ -34,6 +47,11 @@ public class UserController {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
 
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
         throw new InvalidAuthException();
     }
 
@@ -42,6 +60,11 @@ public class UserController {
     public void deactivateUser(@PathVariable(name="userId") String userId, HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
