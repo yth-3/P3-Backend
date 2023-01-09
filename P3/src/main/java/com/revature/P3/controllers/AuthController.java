@@ -43,6 +43,9 @@ public class AuthController {
                         candidate.getRole().getRole()
                 );
             }
+            else {
+                throw new InvalidAuthException();
+            }
         } catch (Exception exception) {
             throw new InvalidAuthException();
         }
