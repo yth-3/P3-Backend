@@ -2,7 +2,6 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
-import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
 import com.revature.P3.enums.Roles;
@@ -22,7 +21,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Principal loginUser(NewLoginRequest req) {
+    public User loginUser(NewLoginRequest req) {
         User candidate = null;
         try {
             candidate = this.userRepository.findAllByUsername(req.getUsername());
@@ -30,16 +29,7 @@ public class UserService {
             throw new InvalidAuthException();
         }
 
-        if (HashService.verify(candidate.getPassword(), req.getPassword())) {
-            return new Principal(candidate.getUserId(),
-                                 candidate.getUsername(),
-                                 candidate.getEmail(),
-                                 candidate.getRegistered().toString(),
-                                 candidate.getActive(),
-                                 candidate.getRole().getRole());
-        }
-
-        throw new InvalidAuthException();
+        return candidate;
     }
 
     public void createPatient(NewUserRequest req) {
