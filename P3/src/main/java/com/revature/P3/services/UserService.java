@@ -23,6 +23,17 @@ public class UserService {
     }
 
     public Principal loginUser(NewLoginRequest req) {
+        User candidate = null;
+        try {
+            candidate = this.userRepository.findAllByUsername(req.getUsername());
+        } catch (Exception e) {
+            return null;
+        }
+
+        if (HashService.verify(candidate.getPassword(), req.getPassword())) {
+            return new Principal("", candidate.getRole().toString());
+        }
+
         return null;
     }
 
