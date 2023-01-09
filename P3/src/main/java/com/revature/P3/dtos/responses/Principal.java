@@ -4,26 +4,23 @@ public class Principal {
     private String userId;
     private String username;
     private String email;
+    private String registered;
+    private boolean active;
     private String role;
     private String token;
 
     public Principal() {
+        super();
     }
 
-    public Principal(String userId, String username, String email, String role) {
+    public Principal(String userId, String username, String email, String registered, boolean active, String role) {
         this.userId = userId;
         this.username = username;
         this.email = email;
+        this.registered = registered;
+        this.active = active;
         this.role = role;
         this.token = null;
-    }
-
-    public Principal(String userId, String username, String email, String role, String token) {
-        this.userId = userId;
-        this.username = username;
-        this.email = email;
-        this.role = role;
-        this.token = token;
     }
 
     public String getUserId() {
@@ -50,6 +47,22 @@ public class Principal {
         this.email = email;
     }
 
+    public String getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(String registered) {
+        this.registered = registered;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public String getRole() {
         return role;
     }
@@ -72,8 +85,9 @@ public class Principal {
                 "userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", registered='" + registered + '\'' +
+                ", active=" + active +
                 ", role='" + role + '\'' +
-                ", token='" + token + '\'' +
                 '}';
     }
 }

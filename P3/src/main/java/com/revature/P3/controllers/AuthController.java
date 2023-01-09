@@ -2,6 +2,7 @@ package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
 import com.revature.P3.dtos.responses.Principal;
+import com.revature.P3.entities.User;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
@@ -30,12 +31,7 @@ public class AuthController {
         Principal principal = null;
         try {
             principal = userService.loginUser(req);
-        }
-        catch (Exception exception) {
-            //
-        }
-
-        if (principal == null) {
+        } catch (Exception exception) {
             throw new InvalidAuthException();
         }
 

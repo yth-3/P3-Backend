@@ -18,7 +18,7 @@ public class TokenServiceTest {
     @Test
     public void test_createNewToken_givenPrincipalSubject() {
         // Arrange
-        Principal principal = new Principal("0","testUser","testEmail",Roles.Patient.toString());
+        Principal principal = new Principal("0","testUser","testEmail","today",true,Roles.Patient.toString());
 
         // Act
         String token = "";
@@ -32,7 +32,7 @@ public class TokenServiceTest {
     @Test
     public void test_retrievePrincipalFromToken_givenToken() {
         // Arrange
-        Principal principal = new Principal("0","testUser","testEmail",Roles.Patient.toString());
+        Principal principal = new Principal("0","testUser","testEmail","today",true,Roles.Patient.toString());
 
         // Act
         String token = "";
@@ -43,6 +43,8 @@ public class TokenServiceTest {
         assertEquals("0",newPrincipal.getUserId());
         assertEquals("testUser",newPrincipal.getUsername());
         assertEquals("testEmail",newPrincipal.getEmail());
+        assertEquals("today",newPrincipal.getRegistered());
+        assertEquals(true,newPrincipal.isActive());
         assertEquals(Roles.Patient.toString(),newPrincipal.getRole());
         assertEquals(token,newPrincipal.getToken());
     }

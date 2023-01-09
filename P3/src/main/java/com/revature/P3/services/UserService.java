@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @Service
 public class UserService {
+
     private UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -22,6 +23,22 @@ public class UserService {
     }
 
     public Principal loginUser(NewLoginRequest req) {
+        User candidate = null;
+        try {
+            candidate = this.userRepository.findAllByUsername(req.getUsername());
+        } catch (Exception e) {
+            return null;
+        }
+
+        if (HashService.verify(candidate.getPassword(), req.getPassword())) {
+            return new Principal(candidate.getUserId(),
+                                 candidate.getUsername(),
+                                 candidate.getEmail(),
+                                 candidate.getRegistered().toString(),
+                                 candidate.getActive(),
+                                 candidate.getRole().toString());
+        }
+
         return null;
     }
 

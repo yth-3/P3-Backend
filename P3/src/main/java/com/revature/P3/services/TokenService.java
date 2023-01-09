@@ -18,39 +18,45 @@ public class TokenService {
         this.jwtConfig = jwtConfig;
     }
 
-    public String createNewToken(Principal principalSubject) {
-        long myTime = System.currentTimeMillis();
+    public String createNewToken(Principal subject) {
+        long now = System.currentTimeMillis();
+
         JwtBuilder tokenBuilder = Jwts.builder()
-                .setId(principalSubject.getUserId())
-                .setIssuer("P3-Backend")
-                .setIssuedAt(new Date(myTime))
-                .setExpiration(new Date(myTime + jwtConfig.getExpiration()))
-                .setSubject(principalSubject.getUsername())
-                .claim("email", principalSubject.getEmail())
-                .claim("role", principalSubject.getRole())
+                .setId(subject.getUserId())
+                .setIssuer("CompositeCare")
+                .setIssuedAt(new Date(now))
+                .setExpiration(new Date(now + jwtConfig.getExpiration()))
+                .setSubject(subject.getUsername())
+                .claim("email", subject.getEmail())
+                .claim("registered", subject.getRegistered())
+                .claim("active", subject.isActive())
+                .claim("role", subject.getRole())
                 .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         String token = tokenBuilder.compact();
-        principalSubject.setToken(token);
         return token;
     }
 
     public Principal retrievePrincipalFromToken(String token) {
+        Claims claims;
         try {
-            Claims claims = Jwts.parser()
+            claims = Jwts.parser()
                     .setSigningKey(jwtConfig.getSigningKey())
                     .parseClaimsJws(token)
                     .getBody();
-            Principal principal = new Principal(
-                    claims.getId(),
-                    claims.getSubject(),
-                    claims.get("email", String.class),
-                    claims.get("role", String.class)
-            );
-            principal.setToken(token);
-            return principal;
         } catch (Exception e) {
             throw new InvalidAuthException();
         }
+
+        Principal principal = new Principal(
+                claims.getId(),
+                claims.getSubject(),
+                claims.get("email", String.class),
+                claims.get("registered", String.class),
+                claims.get("active", Boolean.class),
+                claims.get("role", String.class)
+        );
+        principal.setToken(token);
+        return principal;
     }
 }
