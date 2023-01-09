@@ -31,12 +31,7 @@ public class AuthController {
         Principal principal = null;
         try {
             principal = userService.loginUser(req);
-        }
-        catch (Exception exception) {
-            //
-        }
-
-        if (principal == null) {
+        } catch (Exception exception) {
             throw new InvalidAuthException();
         }
 
