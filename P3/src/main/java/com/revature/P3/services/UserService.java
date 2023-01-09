@@ -36,7 +36,7 @@ public class UserService {
                                  candidate.getEmail(),
                                  candidate.getRegistered().toString(),
                                  candidate.getActive(),
-                                 candidate.getRole().toString());
+                                 candidate.getRole().getRole());
         }
 
         throw new InvalidAuthException();

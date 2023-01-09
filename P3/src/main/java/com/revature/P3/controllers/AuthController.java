@@ -2,7 +2,6 @@ package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
 import com.revature.P3.dtos.responses.Principal;
-import com.revature.P3.entities.User;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
@@ -36,7 +35,6 @@ public class AuthController {
         }
 
         String token = tokenService.createNewToken(principal);
-        principal.setToken(token);
 
         return principal;
     }

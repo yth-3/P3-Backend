@@ -34,6 +34,7 @@ public class TokenService {
                 .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         String token = tokenBuilder.compact();
+        subject.setToken(token);
         return token;
     }
 
