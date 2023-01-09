@@ -36,6 +36,8 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
         throw new InvalidAuthException();
     }
 
@@ -48,6 +50,8 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
+        if (!role.equals("Admin")) throw new InvalidAuthException();
+
         throw new InvalidAuthException();
     }
 
@@ -59,6 +63,8 @@ public class UserController {
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
+
+        if (!role.equals("Admin")) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
