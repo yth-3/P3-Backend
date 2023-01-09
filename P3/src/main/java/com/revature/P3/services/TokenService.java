@@ -2,6 +2,7 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.utils.JwtConfig;
+import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -32,7 +33,8 @@ public class TokenService {
                 .claim("role", subject.getRole())
                 .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
-        return tokenBuilder.compact();
+        String token = tokenBuilder.compact();
+        return token;
     }
 
     public Principal retrievePrincipalFromToken(String token) {
@@ -43,14 +45,18 @@ public class TokenService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            return null;
+            throw new InvalidAuthException();
         }
 
-        return new Principal(claims.getId(),
-                            claims.getSubject(),
-                            claims.get("email", String.class),
-                            claims.get("registered", String.class),
-                            claims.get("active", Boolean.class),
-                            claims.get("role", String.class));
+        Principal principal = new Principal(
+                claims.getId(),
+                claims.getSubject(),
+                claims.get("email", String.class),
+                claims.get("registered", String.class),
+                claims.get("active", Boolean.class),
+                claims.get("role", String.class)
+        );
+        principal.setToken(token);
+        return principal;
     }
 }

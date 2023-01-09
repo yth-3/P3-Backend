@@ -1,65 +1,51 @@
 package com.revature.P3.services;
 
 import com.revature.P3.dtos.responses.Principal;
+import com.revature.P3.enums.Roles;
 import com.revature.P3.utils.JwtConfig;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
-
 import static org.junit.Assert.*;
 
 public class TokenServiceTest {
     private TokenService sut;
-    private Principal principal;
-    private final JwtConfig mockJwtConfig = Mockito.mock(JwtConfig.class);
 
     @Before
     public void init() {
-        principal = new Principal("userID",
-                                "admin",
-                                "email",
-                                "2023-01-09 15:24:01",
-                                true,
-                                "admin");
-        sut = new TokenService(mockJwtConfig);
+        sut = new TokenService(new JwtConfig());
     }
 
     @Test
-    public void test_generateToken_createNewToken() {
-        SignatureAlgorithm alg = SignatureAlgorithm.HS256;
-        Key signingKey = new SecretKeySpec(new byte [16], alg.getJcaName());
+    public void test_createNewToken_givenPrincipalSubject() {
+        // Arrange
+        Principal principal = new Principal("0","testUser","testEmail","today",true,Roles.Patient.toString());
 
-        Mockito.when(mockJwtConfig.getSigAlg()).thenReturn(alg);
-        Mockito.when(mockJwtConfig.getSigningKey()).thenReturn(signingKey);
-        Mockito.when(mockJwtConfig.getExpiration()).thenReturn(3600);
+        // Act
+        String token = "";
+        token = sut.createNewToken(principal);
 
-        String token = sut.createNewToken(principal);
-
-        assertFalse(token == null);
+        // Assert
+        assertNotEquals("",token);
+        assertNotNull(token);
     }
 
     @Test
-    public void test_extractPrincipalInfo_retrievePrincipalFromToken() {
-        SignatureAlgorithm alg = SignatureAlgorithm.HS256;
-        Key signingKey = new SecretKeySpec(new byte [16], alg.getJcaName());
-        Mockito.when(mockJwtConfig.getSigAlg()).thenReturn(alg);
-        Mockito.when(mockJwtConfig.getSigningKey()).thenReturn(signingKey);
-        Mockito.when(mockJwtConfig.getExpiration()).thenReturn(3600);
+    public void test_retrievePrincipalFromToken_givenToken() {
+        // Arrange
+        Principal principal = new Principal("0","testUser","testEmail","today",true,Roles.Patient.toString());
 
-        String token = sut.createNewToken(principal);
+        // Act
+        String token = "";
+        token = sut.createNewToken(principal);
+        Principal newPrincipal = sut.retrievePrincipalFromToken(token);
 
-        System.out.println(token);
-        Principal retrived = sut.retrievePrincipalFromToken(token);
-
-        assertTrue(retrived.getUserId().equals(principal.getUserId()));
-        assertTrue(retrived.getUsername().equals(principal.getUsername()));
-        assertTrue(retrived.getEmail().equals(principal.getEmail()));
-        assertTrue(retrived.getRegistered().equals(principal.getRegistered()));
-        assertTrue(retrived.getRole().equals(principal.getRole()));
-        assertTrue(retrived.isActive() == principal.isActive());
+        // Assert
+        assertEquals("0",newPrincipal.getUserId());
+        assertEquals("testUser",newPrincipal.getUsername());
+        assertEquals("testEmail",newPrincipal.getEmail());
+        assertEquals("today",newPrincipal.getRegistered());
+        assertEquals(true,newPrincipal.isActive());
+        assertEquals(Roles.Patient.toString(),newPrincipal.getRole());
+        assertEquals(token,newPrincipal.getToken());
     }
 }

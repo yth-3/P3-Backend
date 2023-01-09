@@ -3,6 +3,7 @@ package com.revature.P3.controllers;
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
+import com.revature.P3.enums.Roles;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidClaimException;
@@ -31,7 +32,7 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Insurer")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
@@ -45,7 +46,7 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Patient")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException();
 
         throw new InvalidClaimException();
     }
@@ -59,7 +60,7 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals("Insurer")) throw new InvalidAuthException();
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }

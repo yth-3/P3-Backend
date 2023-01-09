@@ -20,7 +20,7 @@ public class Principal {
         this.registered = registered;
         this.active = active;
         this.role = role;
-        this.token = "";
+        this.token = null;
     }
 
     public String getUserId() {
