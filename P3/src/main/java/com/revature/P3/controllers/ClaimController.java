@@ -1,7 +1,9 @@
 package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
+import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
+import com.revature.P3.services.TokenService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidClaimException;
 import org.springframework.http.HttpStatus;
@@ -14,11 +16,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/claims")
 public class ClaimController {
+    private final TokenService tokenService;
+
+    public ClaimController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Claim> viewAllClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
 
         throw new InvalidAuthException();
     }
@@ -29,6 +40,9 @@ public class ClaimController {
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
 
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
         throw new InvalidClaimException();
     }
 
@@ -37,6 +51,9 @@ public class ClaimController {
     public void approveClaim(@PathVariable(name="claimId") String claimId, HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
 
         throw new InvalidAuthException();
     }
