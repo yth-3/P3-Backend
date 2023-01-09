@@ -4,6 +4,10 @@ public class Principal {
     private String token;
     private String role;
 
+    public Principal(String role) {
+        this.token = null;
+        this.role = role;
+    }
     public Principal(String token, String role) {
         this.token = token;
         this.role = role;
