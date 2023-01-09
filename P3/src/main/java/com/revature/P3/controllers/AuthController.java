@@ -28,19 +28,17 @@ public class AuthController {
             throw new InvalidAuthException();
         }
 
-        User user = null;
+        Principal principal = null;
         try {
-            user = userService.loginUser(req);
+            principal = userService.loginUser(req);
         }
         catch (Exception exception) {
             //
         }
 
-        if (user == null) {
+        if (principal == null) {
             throw new InvalidAuthException();
         }
-
-        Principal principal = new Principal(user);
 
         String token = tokenService.createNewToken(principal);
         principal.setToken(token);
