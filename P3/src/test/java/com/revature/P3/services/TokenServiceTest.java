@@ -2,7 +2,6 @@ package com.revature.P3.services;
 
 import antlr.Token;
 import com.revature.P3.dtos.responses.Principal;
-import com.revature.P3.entities.Role;
 import com.revature.P3.utils.JwtConfig;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Before;
@@ -35,8 +34,10 @@ public class TokenServiceTest {
     public void test_generateToken_createNewToken() {
         SignatureAlgorithm alg = SignatureAlgorithm.HS256;
         Key signingKey = new SecretKeySpec(new byte [16], alg.getJcaName());
+
         Mockito.when(mockJwtConfig.getSigAlg()).thenReturn(alg);
         Mockito.when(mockJwtConfig.getSigningKey()).thenReturn(signingKey);
+        Mockito.when(mockJwtConfig.getExpiration()).thenReturn(3600);
 
         String token = sut.createNewToken(principal);
 
@@ -49,15 +50,18 @@ public class TokenServiceTest {
         Key signingKey = new SecretKeySpec(new byte [16], alg.getJcaName());
         Mockito.when(mockJwtConfig.getSigAlg()).thenReturn(alg);
         Mockito.when(mockJwtConfig.getSigningKey()).thenReturn(signingKey);
+        Mockito.when(mockJwtConfig.getExpiration()).thenReturn(3600);
 
         String token = sut.createNewToken(principal);
+
+        System.out.println(token);
         Principal retrived = sut.retrievePrincipalFromToken(token);
 
-        assertTrue(retrived.getUserId() == principal.getUserId());
-        assertTrue(retrived.getUsername() == principal.getUsername());
-        assertTrue(retrived.getEmail() == principal.getEmail());
-        assertTrue(retrived.getRegistered() == principal.getRegistered());
-        assertTrue(retrived.getRole() == principal.getRole());
+        assertTrue(retrived.getUserId().equals(principal.getUserId()));
+        assertTrue(retrived.getUsername().equals(principal.getUsername()));
+        assertTrue(retrived.getEmail().equals(principal.getEmail()));
+        assertTrue(retrived.getRegistered().equals(principal.getRegistered()));
+        assertTrue(retrived.getRole().equals(principal.getRole()));
         assertTrue(retrived.isActive() == principal.isActive());
     }
 }
