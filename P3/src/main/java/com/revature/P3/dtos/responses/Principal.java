@@ -1,15 +1,52 @@
 package com.revature.P3.dtos.responses;
 
 public class Principal {
-    private String token;
+    private String userId;
+    private String username;
+    private String email;
     private String role;
+    private String token;
 
-    public Principal(String role) {
-        this.token = null;
-        this.role = role;
+    public Principal() {
     }
-    public Principal(String token, String role) {
+
+    public Principal(String userId, String username, String email, String role, String token) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.role = role;
         this.token = token;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -21,19 +58,14 @@ public class Principal {
         this.token = token;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     @Override
     public String toString() {
         return "Principal{" +
-                "token='" + token + '\'' +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }
