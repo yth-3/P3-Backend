@@ -31,6 +31,8 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
+        if (!role.equals("Insurer")) throw new InvalidAuthException();
+
         throw new InvalidAuthException();
     }
 
@@ -43,6 +45,8 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
+        if (!role.equals("Patient")) throw new InvalidAuthException();
+
         throw new InvalidClaimException();
     }
 
@@ -54,6 +58,8 @@ public class ClaimController {
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
+
+        if (!role.equals("Insurer")) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
