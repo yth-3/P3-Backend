@@ -1,7 +1,11 @@
 package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewUserRequest;
+import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.Roles;
+import com.revature.P3.services.TokenService;
+import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.http.HttpStatus;
@@ -13,10 +17,80 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final TokenService tokenService;
+    private final UserService userService;
+
+    public UserController(TokenService tokenService, UserService userService) {
+        this.tokenService = tokenService;
+        this.userService = userService;
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody(required = false) NewUserRequest req) {
-        throw new InvalidUserException();
+    public void createPatient(@RequestBody(required = false) NewUserRequest req) {
+        try {
+            userService.createPatient(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
+    @PostMapping(path="nurse")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNurse(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+
+        try {
+            userService.createNurse(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
+    @PostMapping(path="doctor")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createDoctor(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+
+        try {
+            userService.createDoctor(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
+    @PostMapping(path="insurer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createInsurer(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+
+        try {
+            userService.createInsurer(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
     }
 
     @GetMapping
@@ -24,6 +98,11 @@ public class UserController {
     public List<User> viewAllUsers(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
@@ -34,6 +113,11 @@ public class UserController {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
 
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+
         throw new InvalidAuthException();
     }
 
@@ -42,6 +126,11 @@ public class UserController {
     public void deactivateUser(@PathVariable(name="userId") String userId, HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
         throw new InvalidAuthException();
     }
