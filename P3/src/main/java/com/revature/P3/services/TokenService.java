@@ -28,14 +28,29 @@ public class TokenService {
                 .setSubject(subject.getUsername())
                 .claim("email", subject.getEmail())
                 .claim("registered", subject.getRegistered())
-                .claim("isActive", subject.isActive())
-                .claim("roleId", subject.getRole())
+                .claim("active", subject.isActive())
+                .claim("role", subject.getRole())
                 .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         return tokenBuilder.compact();
     }
 
     public Principal retrievePrincipalFromToken(String token) {
-        return null;
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(jwtConfig.getSigningKey())
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            return null;
+        }
+
+        return new Principal(claims.getId(),
+                            claims.getSubject(),
+                            claims.get("email", String.class),
+                            claims.get("registered", String.class),
+                            claims.get("active", Boolean.class),
+                            claims.get("role", String.class));
     }
 }
