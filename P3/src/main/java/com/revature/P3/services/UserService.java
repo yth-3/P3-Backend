@@ -31,7 +31,12 @@ public class UserService {
         }
 
         if (HashService.verify(candidate.getPassword(), req.getPassword())) {
-            return new Principal("", candidate.getRole().toString());
+            return new Principal(candidate.getUserId(),
+                                 candidate.getUsername(),
+                                 candidate.getEmail(),
+                                 candidate.getRegistered().toString(),
+                                 candidate.getActive(),
+                                 candidate.getRole().toString());
         }
 
         return null;
