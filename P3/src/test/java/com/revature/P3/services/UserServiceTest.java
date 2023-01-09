@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.*;
@@ -43,5 +44,25 @@ public class UserServiceTest {
         Principal p = sut.loginUser(req);
 
         assertFalse(p == null);
+    }
+
+    @Test
+    public void test_simpleBadLogin_login() {
+        req.setPassword("randomPassword");
+        Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenReturn(user);
+
+        Principal p = sut.loginUser(req);
+
+        assertTrue(p == null);
+    }
+
+    @Test
+    public void test_loginThrowsError_login() {
+        req.setPassword("randomPassword");
+        Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenThrow(RuntimeException.class);
+
+        Principal p = sut.loginUser(req);
+
+        assertTrue(p == null);
     }
 }
