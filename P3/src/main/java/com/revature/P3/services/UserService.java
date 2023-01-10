@@ -83,7 +83,7 @@ public class UserService {
             userRepository.save(newUser);
         }
         catch (Exception exception) {
-            throw new InvalidUserException();
+            throw new InvalidUserException("Invalid signup request or duplicate user found");
         }
     }
 }
