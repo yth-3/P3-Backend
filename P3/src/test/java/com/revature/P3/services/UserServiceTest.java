@@ -84,7 +84,7 @@ public class    UserServiceTest {
 
     @Test
     public void test_createUserThrowsErrorsProperly_createUser() {
-        doThrow(InvalidUserException.class).when(mockUserRepo).save(any());
+        doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
         InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
             sut.createPatient(nuReq);
