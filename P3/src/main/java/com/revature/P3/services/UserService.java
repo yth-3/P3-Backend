@@ -52,6 +52,10 @@ public class UserService {
         this.createUser(req, Roles.Insurer);
     }
 
+    public void createStaff(NewUserRequest req) {
+        this.createUser(req, Roles.Staff);
+    }
+
     public List<Principal> getAllUsers() {
         Iterator<User> allUsers = userRepository.findAll().iterator();
         List<Principal> allUsersList = new LinkedList<>();
