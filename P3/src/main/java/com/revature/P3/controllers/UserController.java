@@ -98,6 +98,26 @@ public class UserController {
         }
     }
 
+    @PostMapping(path="staff")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createStaff(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
+
+        try {
+            req.setPassword(HashService.getHash(req.getPassword()));
+            userService.createStaff(req);
+        }
+        catch (InvalidUserException exception) {
+            throw new InvalidUserException();
+        }
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Principal> viewAllUsers(HttpServletRequest req) {
