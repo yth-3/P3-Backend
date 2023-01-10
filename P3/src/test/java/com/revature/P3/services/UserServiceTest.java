@@ -1,10 +1,13 @@
 package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
+import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
+import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -12,12 +15,15 @@ import org.mockito.Mockito;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 
-public class UserServiceTest {
+public class    UserServiceTest {
     private UserService sut;
     private NewLoginRequest req;
     private String password;
     private User user;
+    private NewUserRequest nuReq;
 
     private final UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
 
@@ -34,6 +40,8 @@ public class UserServiceTest {
                         new Timestamp(0),
                 true,
                         new Role());
+
+        nuReq = new NewUserRequest("tester", "passw0rd", "example@example.com");
     }
 
     @Test
@@ -60,5 +68,28 @@ public class UserServiceTest {
         }
 
         assertTrue(test);
+    }
+
+    @Test
+    public void test_loginThrowsErrorAssertThrows_login() {
+        req.setPassword("randomPassword");
+        Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenThrow(RuntimeException.class);
+
+        InvalidAuthException e = assertThrows(InvalidAuthException.class, () -> {
+            User u = sut.loginUser(req);
+        });
+
+        assertTrue(e.getMessage().equals("Not Authorized"));
+    }
+
+    @Test
+    public void test_createUserThrowsErrorsProperly_createUser() {
+        doThrow(InvalidUserException.class).when(mockUserRepo).save(any());
+
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.createPatient(nuReq);
+        });
+
+//        assertTrue(e.getMessage().equals("User cannot be created"));
     }
 }
