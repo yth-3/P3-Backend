@@ -34,7 +34,7 @@ public class Role {
             this.roleId = "4";
         }
         else {
-            throw new InvalidUserException();
+            throw new InvalidUserException("Invalid role specified");
         }
 
         this.role = role.toString();
