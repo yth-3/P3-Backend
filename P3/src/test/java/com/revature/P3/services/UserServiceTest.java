@@ -56,6 +56,7 @@ public class UserServiceTest {
         }
         catch (InvalidAuthException exception) {
             test = true;
+            assertTrue(exception.getMessage().equals("Not Authorized"));
         }
 
         assertTrue(test);
