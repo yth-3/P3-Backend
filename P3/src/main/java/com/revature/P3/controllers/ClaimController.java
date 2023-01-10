@@ -48,7 +48,7 @@ public class ClaimController {
 
         if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidClaimException();
+        throw new InvalidClaimException("Not implemented");
     }
 
     @PutMapping(path="approve/{claimId}")
@@ -67,13 +67,13 @@ public class ClaimController {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
-    public InvalidAuthException handleInvalidAuthException (InvalidAuthException exception) {
-        return exception;
+    public String handleInvalidAuthException (InvalidAuthException exception) {
+        return exception.getMessage();
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidClaimException.class)
-    public InvalidClaimException handleInvalidClaimException (InvalidClaimException exception) {
-        return exception;
+    public String handleInvalidClaimException (InvalidClaimException exception) {
+        return exception.getMessage();
     }
 }

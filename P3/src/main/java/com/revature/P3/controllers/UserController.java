@@ -34,7 +34,7 @@ public class UserController {
             userService.createPatient(req);
         }
         catch (InvalidUserException exception) {
-            throw new InvalidUserException();
+            throw exception;
         }
     }
 
@@ -54,7 +54,7 @@ public class UserController {
             userService.createNurse(req);
         }
         catch (InvalidUserException exception) {
-            throw new InvalidUserException();
+            throw exception;
         }
     }
 
@@ -74,7 +74,7 @@ public class UserController {
             userService.createDoctor(req);
         }
         catch (InvalidUserException exception) {
-            throw new InvalidUserException();
+            throw exception;
         }
     }
 
@@ -94,7 +94,7 @@ public class UserController {
             userService.createInsurer(req);
         }
         catch (InvalidUserException exception) {
-            throw new InvalidUserException();
+            throw exception;
         }
     }
 
@@ -114,7 +114,7 @@ public class UserController {
             userService.createStaff(req);
         }
         catch (InvalidUserException exception) {
-            throw new InvalidUserException();
+            throw exception;
         }
     }
 
