@@ -111,7 +111,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void test_createUserThrowsErrorsProperly_createDcotor() {
+    public void test_createUserThrowsErrorsProperly_createDoctor() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
         InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
