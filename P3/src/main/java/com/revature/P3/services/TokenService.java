@@ -46,7 +46,7 @@ public class TokenService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            throw new InvalidAuthException();
+            throw new InvalidAuthException("Not Authorized");
         }
 
         Principal principal = new Principal(

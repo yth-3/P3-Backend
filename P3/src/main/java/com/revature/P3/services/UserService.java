@@ -30,7 +30,7 @@ public class UserService {
         try {
             candidate = this.userRepository.findAllByUsername(req.getUsername());
         } catch (Exception e) {
-            throw new InvalidAuthException();
+            throw new InvalidAuthException("Not Authorized");
         }
 
         return candidate;

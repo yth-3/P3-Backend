@@ -42,12 +42,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createNurse(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
         String token = servletReq.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
@@ -62,12 +62,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createDoctor(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
         String token = servletReq.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
@@ -82,12 +82,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createInsurer(@RequestBody(required = false) NewUserRequest req, HttpServletRequest servletReq) {
         String token = servletReq.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
@@ -102,12 +102,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Principal> viewAllUsers(HttpServletRequest req) {
         String token = req.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
         return userService.getAllUsers();
     }
@@ -116,28 +116,28 @@ public class UserController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void activateUser(@PathVariable(name="userId") String userId, HttpServletRequest req) {
         String token = req.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException();
+        throw new InvalidAuthException("Not Authorized");
     }
 
     @PutMapping(path="deactivate/{userId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deactivateUser(@PathVariable(name="userId") String userId, HttpServletRequest req) {
         String token = req.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException();
+        throw new InvalidAuthException("Not Authorized");
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
