@@ -1,5 +1,9 @@
 package com.revature.P3.dtos.responses;
 
+import com.revature.P3.entities.Role;
+
+import java.sql.Timestamp;
+
 public class Principal {
     private String userId;
     private String username;
@@ -20,6 +24,16 @@ public class Principal {
         this.registered = registered;
         this.active = active;
         this.role = role;
+        this.token = null;
+    }
+
+    public Principal(String userId, String username, String email, Timestamp registered, boolean active, Role role) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.registered = registered.toString();
+        this.active = active;
+        this.role = role.getRole();
         this.token = null;
     }
 
