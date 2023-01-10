@@ -46,7 +46,7 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException("NOt Authorized");
+        if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException("Not Authorized");
 
         throw new InvalidClaimException();
     }
