@@ -2,7 +2,6 @@ package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
-import com.revature.P3.entities.User;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.services.HashService;
 import com.revature.P3.services.TokenService;
@@ -101,7 +100,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<User> viewAllUsers(HttpServletRequest req) {
+    public List<Principal> viewAllUsers(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException();
 
@@ -110,7 +109,7 @@ public class UserController {
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException();
 
-        throw new InvalidAuthException();
+        return userService.getAllUsers();
     }
 
     @PutMapping(path="activate/{userId}")

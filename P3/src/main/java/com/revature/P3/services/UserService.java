@@ -2,6 +2,7 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
+import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
 import com.revature.P3.enums.Roles;
@@ -11,6 +12,9 @@ import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -46,6 +50,24 @@ public class UserService {
 
     public void createInsurer(NewUserRequest req) {
         this.createUser(req, Roles.Insurer);
+    }
+
+    public List<Principal> getAllUsers() {
+        Iterator<User> allUsers = userRepository.findAll().iterator();
+        List<Principal> allUsersList = new LinkedList<>();
+
+        allUsers.forEachRemaining((user) -> allUsersList.add(
+                new Principal(
+                        user.getUserId(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        user.getRegistered(),
+                        user.getActive(),
+                        user.getRole()
+                )
+        ));
+
+        return allUsersList;
     }
 
     private void createUser(NewUserRequest req, Roles role) {
