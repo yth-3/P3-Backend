@@ -26,7 +26,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Principal login(@RequestBody(required = false) NewLoginRequest req) {
         if (req == null) {
-            throw new InvalidAuthException();
+            throw new InvalidAuthException("Not Authorized");
         }
 
         Principal principal = null;
@@ -44,10 +44,10 @@ public class AuthController {
                 );
             }
             else {
-                throw new InvalidAuthException();
+                throw new InvalidAuthException("Not Authorized");
             }
         } catch (Exception exception) {
-            throw new InvalidAuthException();
+            throw new InvalidAuthException("Not Authorized");
         }
 
         String token = tokenService.createNewToken(principal);
@@ -57,7 +57,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
-    public InvalidAuthException handleInvalidAuthException (InvalidAuthException exception) {
-        return exception;
+    public String handleInvalidAuthException (InvalidAuthException exception) {
+        return exception.getMessage();
     }
 }
