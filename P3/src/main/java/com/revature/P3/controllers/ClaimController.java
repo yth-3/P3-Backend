@@ -27,26 +27,26 @@ public class ClaimController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Claim> viewAllClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException();
+        throw new InvalidAuthException("Not Authorized");
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createClaim(@RequestBody(required = false) NewClaimRequest claimReq, HttpServletRequest servletReq) {
         String token = servletReq.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException("NOt Authorized");
 
         throw new InvalidClaimException();
     }
@@ -55,14 +55,14 @@ public class ClaimController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void approveClaim(@PathVariable(name="claimId") String claimId, HttpServletRequest req) {
         String token = req.getHeader("authorization");
-        if (token == null || token.isEmpty()) throw new InvalidAuthException();
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException();
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException();
+        throw new InvalidAuthException("Not Authorized");
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
