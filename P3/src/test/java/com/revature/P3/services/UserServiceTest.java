@@ -136,4 +136,16 @@ public class UserServiceTest {
             sut.createStaff(nuReq);
         });
     }
+
+    @Test
+    public void test_getAllUsers_givenNothing() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getAllUsers();
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).findAll();
+    }
 }
