@@ -1,8 +1,6 @@
 package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
-import com.revature.P3.dtos.requests.NewLoginRequest;
-import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.Role;

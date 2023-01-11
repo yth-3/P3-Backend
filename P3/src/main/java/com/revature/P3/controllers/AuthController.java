@@ -6,6 +6,7 @@ import com.revature.P3.entities.User;
 import com.revature.P3.services.HashService;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
+import com.revature.P3.utils.custom_exceptions.BadGatewayException;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +29,20 @@ public class AuthController {
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Principal login(@RequestBody(required = false) NewLoginRequest req) {
-        if (req == null) {
-            throw new InvalidAuthException("Not Authorized");
+        if (req == null || req.getUsername() == null || req.getPassword() == null) {
+            throw new InvalidAuthException("Invalid Request");
         }
 
         Principal principal = null;
         try {
-            User candidate = userService.loginUser(req);
+            User candidate = null;
+            try {
+                candidate = userService.loginUser(req);
+            } catch (BadGatewayException exception) {
+                throw exception;
+            }
+
+            if (candidate == null) throw new InvalidAuthException("Invalid Username or Password");
 
             if (!candidate.getActive()) throw new InvalidAuthException("Deactivated");
 
@@ -65,6 +73,12 @@ public class AuthController {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
     public String handleInvalidAuthException (InvalidAuthException exception) {
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(Exception.class)
+    public String handleBadGatewayException (BadGatewayException exception) {
         return exception.getMessage();
     }
 }
