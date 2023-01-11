@@ -35,6 +35,7 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createPatient(req);
+            logger.info("Created patient.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to create patient.");
@@ -56,6 +57,7 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createNurse(req);
+            logger.info("Created nurse.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to create nurse.");
@@ -77,6 +79,7 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createDoctor(req);
+            logger.info("Created doctor.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to create doctor.");
@@ -98,6 +101,7 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createInsurer(req);
+            logger.info("Created insurer.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to create insurer.");
@@ -119,6 +123,7 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createStaff(req);
+            logger.info("Created staff.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to create staff.");
@@ -153,6 +158,7 @@ public class UserController {
 
         try {
             userService.activateUser(userId);
+            logger.info("Activated user.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to activate user.");
@@ -173,6 +179,7 @@ public class UserController {
 
         try {
             userService.deactivateUser(userId);
+            logger.info("Deactivated user.");
         }
         catch (InvalidUserException exception) {
             logger.error("Was not able to deactivate user.");
