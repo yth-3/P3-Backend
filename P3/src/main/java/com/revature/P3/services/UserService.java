@@ -10,6 +10,7 @@ import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
@@ -72,6 +74,24 @@ public class UserService {
         ));
 
         return allUsersList;
+    }
+
+    public void activateUser(String userId) {
+        try {
+            userRepository.activateUser(userId);
+        }
+        catch (Exception exception) {
+            throw new InvalidUserException("Invalid user id");
+        }
+    }
+
+    public void deactivateUser(String userId) {
+        try {
+            userRepository.deactivateUser(userId);
+        }
+        catch (Exception exception) {
+            throw new InvalidUserException("Invalid user id");
+        }
     }
 
     private void createUser(NewUserRequest req, Roles role) {

@@ -7,6 +7,8 @@ import com.revature.P3.services.HashService;
 import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
     private final TokenService tokenService;
 
@@ -33,6 +36,8 @@ public class AuthController {
         try {
             User candidate = userService.loginUser(req);
 
+            if (!candidate.getActive()) throw new InvalidAuthException("Deactivated");
+
             if (HashService.verify(candidate.getPassword(), req.getPassword())) {
                 principal = new Principal(
                         candidate.getUserId(),
@@ -46,8 +51,10 @@ public class AuthController {
             else {
                 throw new InvalidAuthException("Not Authorized");
             }
+            logger.info("User login succeeded.");
         } catch (Exception exception) {
-            throw new InvalidAuthException("Not Authorized");
+            logger.warn("User login failed.");
+            throw exception;
         }
 
         String token = tokenService.createNewToken(principal);

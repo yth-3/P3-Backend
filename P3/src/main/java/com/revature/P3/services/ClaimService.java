@@ -16,8 +16,8 @@ import java.util.UUID;
 
 @Service
 public class ClaimService {
-    private ClaimRepository claimRepo;
-    private UserRepository userRepo;
+    private final ClaimRepository claimRepo;
+    private final UserRepository userRepo;
 
     public ClaimService(ClaimRepository claimRepo, UserRepository userRepo) {
         this.claimRepo = claimRepo;
@@ -36,11 +36,15 @@ public class ClaimService {
         long now = System.currentTimeMillis();
         Timestamp ts = new Timestamp(now);
         Claim claim = new Claim(UUID.randomUUID().toString(),
-                                ts,
-                                req.getClaimedAmount(),
-                                req.getClaimType(),
+                ts,
+                req.getClaimedAmount(),
+                req.getClaimType(),
                 null,
                 null, null);
-        claimRepo.save();
+        claimRepo.save(claim);
+    }
+
+    public Iterable<Claim> getAllClaims() {
+        return claimRepository.findAll();
     }
 }
