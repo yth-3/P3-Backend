@@ -1,11 +1,7 @@
 package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
-import com.revature.P3.dtos.requests.NewLoginRequest;
-import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
-import com.revature.P3.entities.Role;
-import com.revature.P3.entities.User;
 import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
 import org.junit.Before;

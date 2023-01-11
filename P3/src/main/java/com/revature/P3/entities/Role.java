@@ -33,6 +33,9 @@ public class Role {
         else if (role.equals(Roles.Admin)) {
             this.roleId = "4";
         }
+        else if (role.equals(Roles.Staff)) {
+            this.roleId = "5";
+        }
         else {
             throw new InvalidUserException("Invalid role specified");
         }
