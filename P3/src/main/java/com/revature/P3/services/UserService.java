@@ -75,11 +75,21 @@ public class UserService {
     }
 
     public void activateUser(String userId) {
-        throw new RuntimeException();
+        try {
+            userRepository.activateUser(userId);
+        }
+        catch (Exception exception) {
+            throw new InvalidUserException("Invalid user id");
+        }
     }
 
     public void deactivateUser(String userId) {
-        throw new RuntimeException();
+        try {
+            userRepository.deactivateUser(userId);
+        }
+        catch (Exception exception) {
+            throw new InvalidUserException("Invalid user id");
+        }
     }
 
     private void createUser(NewUserRequest req, Roles role) {
