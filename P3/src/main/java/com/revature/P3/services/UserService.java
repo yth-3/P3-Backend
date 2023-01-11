@@ -9,9 +9,11 @@ import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.BadGatewayException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
+import org.postgresql.util.PSQLException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
@@ -31,7 +32,7 @@ public class UserService {
         User candidate = null;
         try {
             candidate = this.userRepository.findAllByUsername(req.getUsername());
-        } catch (Exception exception) {
+        } catch (Exception e) {
             throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
 
@@ -98,12 +99,13 @@ public class UserService {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
         Role newRole = new Role(role);
+        User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
         try {
-            User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
             userRepository.save(newUser);
-        }
-        catch (Exception exception) {
+        } catch (DataIntegrityViolationException exception) {
             throw new InvalidUserException("Invalid signup request or duplicate user found");
+        } catch (Exception exception) {
+            throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
     }
 }
