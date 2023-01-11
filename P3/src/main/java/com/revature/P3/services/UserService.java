@@ -74,6 +74,14 @@ public class UserService {
         return allUsersList;
     }
 
+    public void activateUser(String userId) {
+        throw new RuntimeException();
+    }
+
+    public void deactivateUser(String userId) {
+        throw new RuntimeException();
+    }
+
     private void createUser(NewUserRequest req, Roles role) {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
