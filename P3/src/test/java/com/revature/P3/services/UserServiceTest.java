@@ -4,7 +4,6 @@ import com.revature.P3.dtos.requests.NewLoginRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
-import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
@@ -18,7 +17,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 
-public class    UserServiceTest {
+public class UserServiceTest {
     private UserService sut;
     private NewLoginRequest req;
     private String password;
@@ -35,11 +34,11 @@ public class    UserServiceTest {
 
         user = new User("randomID",
                 "username",
-                        HashService.getHash(password),
-                   "email@email.net",
-                        new Timestamp(0),
+                HashService.getHash(password),
+                "email@email.net",
+                new Timestamp(0),
                 true,
-                        new Role());
+                new Role());
 
         nuReq = new NewUserRequest("tester", "passw0rd", "example@example.com");
     }
@@ -91,5 +90,50 @@ public class    UserServiceTest {
         });
 
 //        assertTrue(e.getMessage().equals("User cannot be created"));
+    }
+
+    @Test
+    public void test_createUserThrowsErrorsProperly_createPatient() {
+        doThrow(RuntimeException.class).when(mockUserRepo).save(any());
+
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.createPatient(nuReq);
+        });
+    }
+
+    @Test
+    public void test_createUserThrowsErrorsProperly_createNurse() {
+        doThrow(RuntimeException.class).when(mockUserRepo).save(any());
+
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.createNurse(nuReq);
+        });
+    }
+
+    @Test
+    public void test_createUserThrowsErrorsProperly_createDoctor() {
+        doThrow(RuntimeException.class).when(mockUserRepo).save(any());
+
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.createDoctor(nuReq);
+        });
+    }
+
+    @Test
+    public void test_createUserThrowsErrorsProperly_createInsurer() {
+        doThrow(RuntimeException.class).when(mockUserRepo).save(any());
+
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.createInsurer(nuReq);
+        });
+    }
+
+    @Test
+    public void test_createUserThrowsErrorsProperly_createStaff() {
+        doThrow(RuntimeException.class).when(mockUserRepo).save(any());
+
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.createStaff(nuReq);
+        });
     }
 }
