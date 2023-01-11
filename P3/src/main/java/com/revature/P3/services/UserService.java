@@ -7,6 +7,7 @@ import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.UserRepository;
+import com.revature.P3.utils.custom_exceptions.BadGatewayException;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class UserService {
         try {
             candidate = this.userRepository.findAllByUsername(req.getUsername());
         } catch (Exception e) {
-            throw new InvalidAuthException("Not Authorized");
+            throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
 
         return candidate;
