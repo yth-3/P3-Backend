@@ -32,8 +32,12 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createPatient(@RequestBody(required = false) NewUserRequest req) {
+        if (req == null || req.getUsername() == null || req.getPassword() == null || req.getEmail() == null) {
+            throw new InvalidUserException("Invalid signup request or duplicate user found");
+        }
+
+        req.setPassword(HashService.getHash(req.getPassword()));
         try {
-            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createPatient(req);
             logger.info("Created patient.");
         }
@@ -49,13 +53,17 @@ public class UserController {
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
+        if (req == null || req.getUsername() == null || req.getPassword() == null || req.getEmail() == null) {
+            throw new InvalidUserException("Invalid signup request or duplicate user found");
+        }
+
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
+        req.setPassword(HashService.getHash(req.getPassword()));
         try {
-            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createNurse(req);
             logger.info("Created nurse.");
         }
@@ -71,13 +79,17 @@ public class UserController {
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
+        if (req == null || req.getUsername() == null || req.getPassword() == null || req.getEmail() == null) {
+            throw new InvalidUserException("Invalid signup request or duplicate user found");
+        }
+
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
+        req.setPassword(HashService.getHash(req.getPassword()));
         try {
-            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createDoctor(req);
             logger.info("Created doctor.");
         }
@@ -93,13 +105,17 @@ public class UserController {
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
+        if (req == null || req.getUsername() == null || req.getPassword() == null || req.getEmail() == null) {
+            throw new InvalidUserException("Invalid signup request or duplicate user found");
+        }
+
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
+        req.setPassword(HashService.getHash(req.getPassword()));
         try {
-            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createInsurer(req);
             logger.info("Created insurer.");
         }
@@ -115,13 +131,17 @@ public class UserController {
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
+        if (req == null || req.getUsername() == null || req.getPassword() == null || req.getEmail() == null) {
+            throw new InvalidUserException("Invalid signup request or duplicate user found");
+        }
+
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
+        req.setPassword(HashService.getHash(req.getPassword()));
         try {
-            req.setPassword(HashService.getHash(req.getPassword()));
             userService.createStaff(req);
             logger.info("Created staff.");
         }
