@@ -8,6 +8,8 @@ import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final TokenService tokenService;
     private final UserService userService;
 
@@ -32,8 +35,10 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createPatient(req);
+            logger.info("Created patient.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create patient.");
             throw exception;
         }
     }
@@ -52,8 +57,10 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createNurse(req);
+            logger.info("Created nurse.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create nurse.");
             throw exception;
         }
     }
@@ -72,8 +79,10 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createDoctor(req);
+            logger.info("Created doctor.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create doctor.");
             throw exception;
         }
     }
@@ -92,8 +101,10 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createInsurer(req);
+            logger.info("Created insurer.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create insurer.");
             throw exception;
         }
     }
@@ -112,8 +123,10 @@ public class UserController {
         try {
             req.setPassword(HashService.getHash(req.getPassword()));
             userService.createStaff(req);
+            logger.info("Created staff.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create staff.");
             throw exception;
         }
     }
@@ -145,8 +158,10 @@ public class UserController {
 
         try {
             userService.activateUser(userId);
+            logger.info("Activated user.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to activate user.");
             throw exception;
         }
     }
@@ -164,8 +179,10 @@ public class UserController {
 
         try {
             userService.deactivateUser(userId);
+            logger.info("Deactivated user.");
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to deactivate user.");
             throw exception;
         }
     }
