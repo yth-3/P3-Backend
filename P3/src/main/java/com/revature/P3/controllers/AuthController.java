@@ -36,6 +36,8 @@ public class AuthController {
         try {
             User candidate = userService.loginUser(req);
 
+            if (!candidate.getActive()) throw new InvalidAuthException("Deactivated");
+
             if (HashService.verify(candidate.getPassword(), req.getPassword())) {
                 principal = new Principal(
                         candidate.getUserId(),
@@ -52,7 +54,7 @@ public class AuthController {
             logger.info("User login succeeded.");
         } catch (Exception exception) {
             logger.warn("User login failed.");
-            throw new InvalidAuthException("Not Authorized");
+            throw exception;
         }
 
         String token = tokenService.createNewToken(principal);
