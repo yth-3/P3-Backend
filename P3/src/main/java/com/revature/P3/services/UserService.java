@@ -74,6 +74,24 @@ public class UserService {
         return allUsersList;
     }
 
+    public void activateUser(String userId) {
+        try {
+            userRepository.activateUser(userId);
+        }
+        catch (Exception exception) {
+            throw new InvalidUserException("Invalid user id");
+        }
+    }
+
+    public void deactivateUser(String userId) {
+        try {
+            userRepository.deactivateUser(userId);
+        }
+        catch (Exception exception) {
+            throw new InvalidUserException("Invalid user id");
+        }
+    }
+
     private void createUser(NewUserRequest req, Roles role) {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
