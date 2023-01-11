@@ -31,20 +31,25 @@ public class ClaimService {
             throw new InvalidUserException("Claimant does not exist");
         }
 
-        ClaimType type = new ClaimType();
+        ClaimType type = new ClaimType(req.getClaimType(), req.getClaimType());
 
         long now = System.currentTimeMillis();
         Timestamp ts = new Timestamp(now);
         Claim claim = new Claim(UUID.randomUUID().toString(),
+                user,
                 ts,
                 req.getClaimedAmount(),
-                req.getClaimType(),
+                type,
                 null,
-                null, null);
+                null,
+                null,
+                null,
+                null,
+                null);
         claimRepo.save(claim);
     }
 
     public Iterable<Claim> getAllClaims() {
-        return claimRepository.findAll();
+        return this.claimRepo.findAll();
     }
 }
