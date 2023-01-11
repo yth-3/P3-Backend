@@ -11,10 +11,10 @@ public interface UserRepository extends CrudRepository<User, String> {
     User findAllByUsername(String username);
 
     @Modifying
-    @Query("UPDATE users SET is_active = true WHERE user_id = ?1")
+    @Query(value = "UPDATE users SET is_active = true WHERE user_id = ?1", nativeQuery = true)
     void activateUser(String userId);
 
     @Modifying
-    @Query("UPDATE users SET is_active = false WHERE user_id = ?1")
+    @Query(value = "UPDATE users SET is_active = false WHERE user_id = ?1", nativeQuery = true)
     void deactivateUser(String userId);
 }
