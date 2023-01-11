@@ -162,13 +162,13 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidUserException.class)
-    public InvalidUserException handleInvalidUserException (InvalidUserException exception) {
-        return exception;
+    public String handleInvalidUserException (InvalidUserException exception) {
+        return exception.getMessage();
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
-    public InvalidAuthException handleInvalidAuthException (InvalidAuthException exception) {
-        return exception;
+    public String handleInvalidAuthException (InvalidAuthException exception) {
+        return exception.getMessage();
     }
 }
