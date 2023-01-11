@@ -49,6 +49,7 @@ public class AuthController {
             else {
                 throw new InvalidAuthException("Not Authorized");
             }
+            logger.info("User login succeeded.");
         } catch (Exception exception) {
             logger.warn("User login failed.");
             throw new InvalidAuthException("Not Authorized");
