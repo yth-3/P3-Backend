@@ -143,7 +143,12 @@ public class UserController {
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException("Not Authorized");
+        try {
+            userService.activateUser(userId);
+        }
+        catch (InvalidUserException exception) {
+            throw exception;
+        }
     }
 
     @PutMapping(path="deactivate/{userId}")
@@ -157,7 +162,12 @@ public class UserController {
 
         if (!role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException("Not Authorized");
+        try {
+            userService.deactivateUser(userId);
+        }
+        catch (InvalidUserException exception) {
+            throw exception;
+        }
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)

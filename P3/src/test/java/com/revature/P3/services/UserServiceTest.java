@@ -136,4 +136,68 @@ public class UserServiceTest {
             sut.createStaff(nuReq);
         });
     }
+
+    @Test
+    public void test_getAllUsers_givenNothing() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getAllUsers();
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    public void test_activateUser_givenUserId() {
+        // Arrange
+        String userId = user.getUserId();
+        UserService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.activateUser(userId);
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).activateUser(userId);
+    }
+
+    @Test
+    public void test_deactivateUser_givenUserId() {
+        // Arrange
+        String userId = user.getUserId();
+        UserService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.deactivateUser(userId);
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).deactivateUser(userId);
+    }
+
+    @Test
+    public void test_activateUserThrowsErrorsProperly_activateUser() {
+        // Arrange
+        String userId = user.getUserId();
+
+        doThrow(RuntimeException.class).when(mockUserRepo).activateUser(any());
+
+        // Assert
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.activateUser(userId);
+        });
+    }
+
+    @Test
+    public void test_deactivateUserThrowsErrorsProperly_deactivateUser() {
+        // Arrange
+        String userId = user.getUserId();
+
+        doThrow(RuntimeException.class).when(mockUserRepo).deactivateUser(any());
+
+        // Assert
+        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+            sut.deactivateUser(userId);
+        });
+    }
 }

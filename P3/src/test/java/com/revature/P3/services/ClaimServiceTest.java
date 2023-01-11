@@ -41,4 +41,16 @@ public class ClaimServiceTest {
 
         verify(mockClaimRepo, times(1)).save(any());
     }
+
+    @Test
+    public void test_getAllClaims_givenNothing() {
+        // Arrange
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getAllClaims();
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAll();
+    }
 }
