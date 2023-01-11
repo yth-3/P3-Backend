@@ -8,6 +8,8 @@ import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final TokenService tokenService;
     private final UserService userService;
 
@@ -34,6 +37,7 @@ public class UserController {
             userService.createPatient(req);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create patient.");
             throw exception;
         }
     }
@@ -54,6 +58,7 @@ public class UserController {
             userService.createNurse(req);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create nurse.");
             throw exception;
         }
     }
@@ -74,6 +79,7 @@ public class UserController {
             userService.createDoctor(req);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create doctor.");
             throw exception;
         }
     }
@@ -94,6 +100,7 @@ public class UserController {
             userService.createInsurer(req);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create insurer.");
             throw exception;
         }
     }
@@ -114,6 +121,7 @@ public class UserController {
             userService.createStaff(req);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to create staff.");
             throw exception;
         }
     }
@@ -147,6 +155,7 @@ public class UserController {
             userService.activateUser(userId);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to activate user.");
             throw exception;
         }
     }
@@ -166,6 +175,7 @@ public class UserController {
             userService.deactivateUser(userId);
         }
         catch (InvalidUserException exception) {
+            logger.error("Was not able to deactivate user.");
             throw exception;
         }
     }
