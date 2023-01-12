@@ -77,7 +77,7 @@ public class AuthController {
     }
 
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(BadGatewayException.class)
     public String handleBadGatewayException (BadGatewayException exception) {
         return exception.getMessage();
     }

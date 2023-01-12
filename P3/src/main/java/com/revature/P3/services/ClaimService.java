@@ -11,8 +11,8 @@ import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
 
 @Service
 public class ClaimService {
@@ -51,5 +51,25 @@ public class ClaimService {
 
     public Iterable<Claim> getAllClaims() {
         return this.claimRepo.findAll();
+    }
+
+    public List<Claim> getPatientClaims() {
+        return claimRepository.findAllPatientClaims();
+    }
+
+    public List<Claim> getNurseClaims() {
+        return claimRepository.findAllNurseClaims();
+    }
+
+    public List<Claim> getDoctorClaims() {
+        return claimRepository.findAllDoctorClaims();
+    }
+
+    public List<Claim> getInsurerClaims() {
+        return claimRepository.findAllInsurerClaims();
+    }
+
+    public List<Claim> getStaffClaims() {
+        return claimRepository.findAllStaffClaims();
     }
 }
