@@ -75,6 +75,10 @@ public class UserService {
         return allUsersList;
     }
 
+    public List<Principal> getAllPatients() {
+        return null;
+    }
+
     public void activateUser(String userId) {
         try {
             userRepository.activateUser(userId);
