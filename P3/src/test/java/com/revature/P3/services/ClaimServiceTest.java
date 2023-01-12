@@ -34,4 +34,64 @@ public class ClaimServiceTest {
         // Assert
         Mockito.verify(mockClaimRepo, Mockito.times(1)).findAll();
     }
+
+    @Test
+    public void test_getPatientClaims_givenNothing() {
+        // Arrange
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getPatientClaims();
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllPatientClaims();
+    }
+
+    @Test
+    public void test_getNurseClaims_givenNothing() {
+        // Arrange
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getNurseClaims();
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllNurseClaims();
+    }
+
+    @Test
+    public void test_getDoctorClaims_givenNothing() {
+        // Arrange
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getDoctorClaims();
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllDoctorClaims();
+    }
+
+    @Test
+    public void test_getInsurerClaims_givenNothing() {
+        // Arrange
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getInsurerClaims();
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllInsurerClaims();
+    }
+
+    @Test
+    public void test_getStaffClaims_givenNothing() {
+        // Arrange
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getStaffClaims();
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllStaffClaims();
+    }
 }
