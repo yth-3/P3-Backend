@@ -4,6 +4,8 @@ import com.revature.P3.entities.Claim;
 import com.revature.P3.repositories.ClaimRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClaimService {
     private final ClaimRepository claimRepository;
@@ -14,5 +16,25 @@ public class ClaimService {
 
     public Iterable<Claim> getAllClaims() {
         return claimRepository.findAll();
+    }
+
+    public List<Claim> getPatientClaims() {
+        return null;
+    }
+
+    public List<Claim> getNurseClaims() {
+        return null;
+    }
+
+    public List<Claim> getDoctorClaims() {
+        return null;
+    }
+
+    public List<Claim> getInsurerClaims() {
+        return null;
+    }
+
+    public List<Claim> getStaffClaims() {
+        return null;
     }
 }
