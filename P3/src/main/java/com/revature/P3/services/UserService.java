@@ -95,6 +95,15 @@ public class UserService {
         }
     }
 
+    public List<Principal> getAllPatients() {
+        List<User> patientUsers = userRepository.findAllPatients();
+        List<Principal> principals = new LinkedList<>();
+
+        patientUsers.forEach((user) -> principals.add(new Principal(user)));
+
+        return principals;
+    }
+
     public Principal getUser(String userId) {
         User user = userRepository.findAllByUsername(userId);
         if (user == null) throw new InvalidUserException("Invalid Username");
