@@ -117,7 +117,6 @@ public class ClaimController {
         if (req == null || req.getClaimedAmount() <= 0 || req.getClaimType() == null || req.getDescription() == null) {
             throw new InvalidClaimException("Invalid claim request");
         }
-        System.out.println(req);
 
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
