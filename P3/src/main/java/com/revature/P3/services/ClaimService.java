@@ -52,7 +52,7 @@ public class ClaimService {
     }
 
     public Iterable<Claim> getAllClaims() {
-        return this.claimRepo.findAll();
+        return claimRepo.findAll();
     }
 
     public List<Claim> getPatientClaims() {
