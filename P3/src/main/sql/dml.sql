@@ -11,6 +11,10 @@ INSERT INTO claim_types(type_id, type) VALUES('CONSULTATION', 'CONSULTATION');
 INSERT INTO claim_types(type_id, type) VALUES('MEDICATION', 'MEDICATION');
 INSERT INTO claim_types(type_id, type) VALUES('PROCEDURE', 'PROCEDURE');
 
+-- Set Up Claim Statuses in Database
+INSERT INTO claim_statuses(status_id, status) VALUES('CREATED', 'CREATED');
+INSERT INTO claim_statuses(status_id, status) VALUES('SETTLED', 'SETTLED');
+
 -- Set Up Example Users
 INSERT INTO users
 (user_id,username,password,email,registered,is_active,role_id)
