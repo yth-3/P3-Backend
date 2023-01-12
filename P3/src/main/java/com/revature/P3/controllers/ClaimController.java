@@ -131,7 +131,7 @@ public class ClaimController {
         } catch (InvalidUserException e) {
             throw e;
         } catch (Exception e) {
-f            throw new BadGatewayException("Bad Gateway; Try Again Later");
+            throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
     }
 
