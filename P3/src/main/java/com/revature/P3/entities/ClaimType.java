@@ -1,5 +1,8 @@
 package com.revature.P3.entities;
 
+import com.revature.P3.enums.ClaimTypes;
+import com.revature.P3.utils.custom_exceptions.InvalidClaimException;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +15,23 @@ public class ClaimType {
     private String type;
 
     public ClaimType() {
+    }
+
+    public ClaimType(ClaimTypes claimType) {
+        if (claimType.equals(ClaimTypes.CONSULTATION)) {
+            this.typeId = "CONSULTATION";
+        }
+        else if (claimType.equals(ClaimTypes.MEDICATION)) {
+            this.typeId = "MEDICATION";
+        }
+        else if (claimType.equals(ClaimTypes.PROCEDURE)) {
+            this.typeId = "PROCEDURE";
+        }
+        else {
+            throw new InvalidClaimException("Invalid claim type specified");
+        }
+
+        this.type = claimType.toString();
     }
 
     public ClaimType(String typeId, String type) {
