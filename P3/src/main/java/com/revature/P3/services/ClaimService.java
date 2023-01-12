@@ -3,6 +3,7 @@ package com.revature.P3.services;
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
+import com.revature.P3.entities.ClaimStatus;
 import com.revature.P3.entities.ClaimType;
 import com.revature.P3.entities.User;
 import com.revature.P3.repositories.ClaimRepository;
@@ -32,6 +33,7 @@ public class ClaimService {
         }
 
         ClaimType type = new ClaimType(req.getClaimType(), req.getClaimType());
+        ClaimStatus status = new ClaimStatus("CREATED", "CREATED");
 
         long now = System.currentTimeMillis();
         Timestamp ts = new Timestamp(now);
@@ -40,12 +42,12 @@ public class ClaimService {
                 ts,
                 req.getClaimedAmount(),
                 type,
+                req.getDescription(),
                 null,
                 null,
                 null,
-                null,
-                null,
-                null);
+                (double) 0,
+                status);
         claimRepo.save(claim);
     }
 
@@ -54,22 +56,22 @@ public class ClaimService {
     }
 
     public List<Claim> getPatientClaims() {
-        return claimRepository.findAllPatientClaims();
+        return claimRepo.findAllPatientClaims();
     }
 
     public List<Claim> getNurseClaims() {
-        return claimRepository.findAllNurseClaims();
+        return claimRepo.findAllNurseClaims();
     }
 
     public List<Claim> getDoctorClaims() {
-        return claimRepository.findAllDoctorClaims();
+        return claimRepo.findAllDoctorClaims();
     }
 
     public List<Claim> getInsurerClaims() {
-        return claimRepository.findAllInsurerClaims();
+        return claimRepo.findAllInsurerClaims();
     }
 
     public List<Claim> getStaffClaims() {
-        return claimRepository.findAllStaffClaims();
+        return claimRepo.findAllStaffClaims();
     }
 }
