@@ -229,6 +229,20 @@ public class UserController {
         return user;
     }
 
+    @GetMapping(path="patients")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Principal> viewAllPatients(HttpServletRequest req) {
+        String token = req.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
+
+        return userService.getAllPatients();
+    }
+
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidUserException.class)
     public String handleInvalidUserException (InvalidUserException exception) {
