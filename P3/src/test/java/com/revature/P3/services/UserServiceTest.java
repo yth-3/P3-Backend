@@ -2,6 +2,7 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
+import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
 import com.revature.P3.repositories.UserRepository;
@@ -199,5 +200,42 @@ public class UserServiceTest {
         InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
             sut.deactivateUser(userId);
         });
+    }
+
+    @Test
+    public void test_getNullUser_givenUserId() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        String userId = user.getUserId();
+
+        Mockito.doReturn(null).when(mockUserRepo).findAllByUsername(userId);
+
+        // Assert
+        assertThrows(InvalidUserException.class, () -> {
+            spySut.getUser(userId);
+        });
+    }
+
+    @Test
+    public void test_getUser_givenUserId() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        String userId = user.getUserId();
+
+        Mockito.doReturn(user).when(mockUserRepo).findAllByUsername(userId);
+
+        // Act
+        Principal principal = spySut.getUser(userId);
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).findAllByUsername(userId);
+
+        assertEquals(user.getUserId(),principal.getUserId());
+        assertEquals(user.getUsername(),principal.getUsername());
+        assertEquals(user.getEmail(),principal.getEmail());
+        assertEquals(user.getRegistered().toString(),principal.getRegistered());
+        assertEquals(user.getActive(),principal.isActive());
+        assertEquals(user.getRole().getRole(),principal.getRole());
+        assertEquals(null,principal.getToken());
     }
 }
