@@ -207,6 +207,28 @@ public class UserController {
         }
     }
 
+    @GetMapping(path="{userId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Principal viewUser(@PathVariable(name="userId") String userId, HttpServletRequest req) {
+        String token = req.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
+
+        Principal user = null;
+        try {
+            user = userService.getUser(userId);
+        } catch (Exception exception) {
+            logger.error("Was not able to find user.");
+            throw exception;
+        }
+
+        return user;
+    }
+
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidUserException.class)
     public String handleInvalidUserException (InvalidUserException exception) {

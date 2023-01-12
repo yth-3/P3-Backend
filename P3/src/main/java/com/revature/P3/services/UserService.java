@@ -93,6 +93,13 @@ public class UserService {
         }
     }
 
+    public Principal getUser(String userId) {
+        User user = userRepository.findAllByUsername(userId);
+        if (user == null) throw new InvalidUserException("Invalid Username");
+
+        return new Principal(user.getUserId(), user.getUsername(), user.getEmail(), user.getRegistered(), user.getActive(), user.getRole());
+    }
+
     private void createUser(NewUserRequest req, Roles role) {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
