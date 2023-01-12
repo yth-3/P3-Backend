@@ -37,7 +37,7 @@ CREATE TABLE claims (
 	claimed NUMERIC(10,2) not null,
 	type_id VARCHAR(255) not null references claim_types(type_id),
 	description VARCHAR(255) not null,
-	receipt OID,
+	receipt BYTEA,
 	resolver_id VARCHAR(255) references users(user_id),
 	resolved TIMESTAMP,
 	settled NUMERIC(10,2) not null,
