@@ -75,10 +75,6 @@ public class UserService {
         return allUsersList;
     }
 
-    public List<Principal> getAllPatients() {
-        return null;
-    }
-
     public void activateUser(String userId) {
         try {
             userRepository.activateUser(userId);
@@ -95,6 +91,10 @@ public class UserService {
         catch (Exception exception) {
             throw new InvalidUserException("Invalid user id");
         }
+    }
+
+    public List<Principal> getAllPatients() {
+        return null;
     }
 
     public Principal getUser(String userId) {
