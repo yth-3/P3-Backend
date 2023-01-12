@@ -6,7 +6,7 @@ import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
 import com.revature.P3.repositories.UserRepository;
-import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
+import com.revature.P3.utils.custom_exceptions.BadGatewayException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,9 +62,9 @@ public class UserServiceTest {
         try {
             User u = sut.loginUser(req);
         }
-        catch (InvalidAuthException exception) {
+        catch (BadGatewayException exception) {
             test = true;
-            assertTrue(exception.getMessage().equals("Not Authorized"));
+            assertTrue(exception.getMessage().equals("Bad Gateway; Try Again Later"));
         }
 
         assertTrue(test);
@@ -75,18 +75,18 @@ public class UserServiceTest {
         req.setPassword("randomPassword");
         Mockito.when(mockUserRepo.findAllByUsername(req.getUsername())).thenThrow(RuntimeException.class);
 
-        InvalidAuthException e = assertThrows(InvalidAuthException.class, () -> {
+        BadGatewayException e = assertThrows(BadGatewayException.class, () -> {
             User u = sut.loginUser(req);
         });
 
-        assertTrue(e.getMessage().equals("Not Authorized"));
+        assertTrue(e.getMessage().equals("Bad Gateway; Try Again Later"));
     }
 
     @Test
     public void test_createUserThrowsErrorsProperly_createUser() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
-        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+        BadGatewayException e = assertThrows(BadGatewayException.class, () -> {
             sut.createPatient(nuReq);
         });
 
@@ -97,7 +97,7 @@ public class UserServiceTest {
     public void test_createUserThrowsErrorsProperly_createPatient() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
-        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+        assertThrows(BadGatewayException.class, () -> {
             sut.createPatient(nuReq);
         });
     }
@@ -106,7 +106,7 @@ public class UserServiceTest {
     public void test_createUserThrowsErrorsProperly_createNurse() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
-        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+        assertThrows(BadGatewayException.class, () -> {
             sut.createNurse(nuReq);
         });
     }
@@ -115,7 +115,7 @@ public class UserServiceTest {
     public void test_createUserThrowsErrorsProperly_createDoctor() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
-        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+        assertThrows(BadGatewayException.class, () -> {
             sut.createDoctor(nuReq);
         });
     }
@@ -124,7 +124,7 @@ public class UserServiceTest {
     public void test_createUserThrowsErrorsProperly_createInsurer() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
-        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+        assertThrows(BadGatewayException.class, () -> {
             sut.createInsurer(nuReq);
         });
     }
@@ -133,7 +133,7 @@ public class UserServiceTest {
     public void test_createUserThrowsErrorsProperly_createStaff() {
         doThrow(RuntimeException.class).when(mockUserRepo).save(any());
 
-        InvalidUserException e = assertThrows(InvalidUserException.class, () -> {
+        assertThrows(BadGatewayException.class, () -> {
             sut.createStaff(nuReq);
         });
     }
