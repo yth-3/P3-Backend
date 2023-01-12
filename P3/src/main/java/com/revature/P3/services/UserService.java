@@ -93,6 +93,10 @@ public class UserService {
         }
     }
 
+    public Principal getUser(String userId) {
+        return null;
+    }
+
     private void createUser(NewUserRequest req, Roles role) {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
