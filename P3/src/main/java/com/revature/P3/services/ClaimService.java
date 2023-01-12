@@ -19,22 +19,22 @@ public class ClaimService {
     }
 
     public List<Claim> getPatientClaims() {
-        return null;
+        return claimRepository.findAllPatientClaims();
     }
 
     public List<Claim> getNurseClaims() {
-        return null;
+        return claimRepository.findAllNurseClaims();
     }
 
     public List<Claim> getDoctorClaims() {
-        return null;
+        return claimRepository.findAllDoctorClaims();
     }
 
     public List<Claim> getInsurerClaims() {
-        return null;
+        return claimRepository.findAllInsurerClaims();
     }
 
     public List<Claim> getStaffClaims() {
-        return null;
+        return claimRepository.findAllStaffClaims();
     }
 }
