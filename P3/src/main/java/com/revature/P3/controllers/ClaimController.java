@@ -6,8 +6,10 @@ import com.revature.P3.entities.Claim;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.services.ClaimService;
 import com.revature.P3.services.TokenService;
+import com.revature.P3.utils.custom_exceptions.BadGatewayException;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
 import com.revature.P3.utils.custom_exceptions.InvalidClaimException;
+import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -111,16 +113,26 @@ public class ClaimController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createClaim(@RequestBody(required = false) NewClaimRequest claimReq, HttpServletRequest servletReq) {
+    public void createClaim(@RequestBody(required = false) NewClaimRequest req, HttpServletRequest servletReq) {
+        if (req == null || req.getClaimedAmount() <= 0 || req.getClaimType() == null || req.getDescription() == null) {
+            throw new InvalidClaimException("Invalid claim request");
+        }
+        System.out.println(req);
+
         String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
-
         if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidClaimException("Not implemented");
+        try {
+            claimService.createClaim(principal, req);
+        } catch (InvalidUserException e) {
+            throw e;
+        } catch (Exception e) {
+f            throw new BadGatewayException("Bad Gateway; Try Again Later");
+        }
     }
 
     @PutMapping(path="approve/{claimId}")
@@ -146,6 +158,12 @@ public class ClaimController {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidClaimException.class)
     public String handleInvalidClaimException (InvalidClaimException exception) {
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(BadGatewayException.class)
+    public String handleBadGatewayException (BadGatewayException exception) {
         return exception.getMessage();
     }
 }
