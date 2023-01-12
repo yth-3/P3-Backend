@@ -97,8 +97,8 @@ public class UserService {
         long myTime = System.currentTimeMillis();
         Timestamp nowTimestamp = new Timestamp(myTime);
         Role newRole = new Role(role);
+        User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
         try {
-            User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
             userRepository.save(newUser);
         } catch (DataIntegrityViolationException exception) {
             throw new InvalidUserException("Invalid signup request or duplicate user found");
