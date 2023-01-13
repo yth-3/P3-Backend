@@ -84,4 +84,12 @@ public class ClaimService {
     public List<Claim> getStaffClaims() {
         return claimRepo.findAllStaffClaims();
     }
+
+    public void approveClaim(String claimId, String resolverId, Double settled) {
+        throw new RuntimeException("Not Implemented");
+    }
+
+    public void denyClaim(String claimId, String resolverId) {
+        throw new RuntimeException("Not Implemented");
+    }
 }

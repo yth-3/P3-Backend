@@ -1,6 +1,7 @@
 package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
+import com.revature.P3.dtos.requests.NewClaimReviewRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.enums.Roles;
@@ -141,8 +142,8 @@ public class ClaimController {
 
     @PutMapping(path="approve/{claimId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void approveClaim(@PathVariable(name="claimId") String claimId, HttpServletRequest req) {
-        String token = req.getHeader("authorization");
+    public void approveClaim(@PathVariable(name="claimId") String claimId, @RequestBody(required = false) NewClaimReviewRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
         Principal principal = tokenService.retrievePrincipalFromToken(token);
@@ -150,7 +151,12 @@ public class ClaimController {
 
         if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException("Not Authorized");
+        String resolverId = principal.getUserId();
+
+        Double settled = null;
+        if (req != null) settled = req.getSettled();
+
+        claimService.approveClaim(claimId, resolverId, settled);
     }
 
     @PutMapping(path="deny/{claimId}")
@@ -164,7 +170,9 @@ public class ClaimController {
 
         if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
 
-        throw new InvalidAuthException("Not Authorized");
+        String resolverId = principal.getUserId();
+
+        claimService.denyClaim(claimId, resolverId);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
