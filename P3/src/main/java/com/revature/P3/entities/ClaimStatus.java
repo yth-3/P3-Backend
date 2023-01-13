@@ -24,6 +24,9 @@ public class ClaimStatus {
         else if (claimStatus.equals(ClaimStatuses.SETTLED)) {
             this.statusId = "SETTLED";
         }
+        else if (claimStatus.equals(ClaimStatuses.DENIED)) {
+            this.statusId = "DENIED";
+        }
         else {
             throw new InvalidClaimException("Invalid claim status specified");
         }

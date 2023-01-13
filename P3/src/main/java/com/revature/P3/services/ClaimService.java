@@ -93,6 +93,8 @@ public class ClaimService {
     }
 
     public void denyClaim(String claimId, String resolverId) {
-        throw new RuntimeException("Not Implemented");
+        claimRepo.setResolverId(claimId, resolverId);
+        claimRepo.setResolved(claimId, new Timestamp(System.currentTimeMillis()));
+        claimRepo.setStatusId(claimId, new ClaimStatus(ClaimStatuses.DENIED).getStatusId());
     }
 }
