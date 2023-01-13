@@ -5,6 +5,7 @@ import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
 import org.junit.Before;
@@ -113,5 +114,19 @@ public class ClaimServiceTest {
 
         // Assert
         Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllStaffClaims();
+    }
+
+    @Test
+    public void test_getClaimsByUserId_givenUserId() {
+        // Arrange
+        User user = new User("0","testUser","testPassword","test@email.com",
+                new Timestamp(System.currentTimeMillis()), true, new Role(Roles.Patient));
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getClaimsByUserId(user.getUserId());
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllByUserId(user.getUserId());
     }
 }
