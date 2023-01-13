@@ -36,4 +36,8 @@ public interface ClaimRepository extends CrudRepository<Claim, String> {
     @Modifying
     @Query(value = "UPDATE claims SET resolved = ?2 WHERE claim_id = ?1", nativeQuery = true)
     void setResolved(String claimId, Timestamp resolved);
+
+    @Modifying
+    @Query(value = "UPDATE claims SET settled = ?2 WHERE claim_id = ?1", nativeQuery = true)
+    void setSettled(String claimId, Double settled);
 }
