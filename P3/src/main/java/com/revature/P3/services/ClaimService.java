@@ -86,7 +86,10 @@ public class ClaimService {
     }
 
     public void approveClaim(String claimId, String resolverId, Double settled) {
-        throw new RuntimeException("Not Implemented");
+        claimRepo.setResolverId(claimId, resolverId);
+        claimRepo.setResolved(claimId, new Timestamp(System.currentTimeMillis()));
+        if (settled != null) claimRepo.setSettled(claimId,settled);
+        claimRepo.setStatusId(claimId, new ClaimStatus(ClaimStatuses.SETTLED).getStatusId());
     }
 
     public void denyClaim(String claimId, String resolverId) {
