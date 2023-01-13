@@ -238,7 +238,7 @@ public class UserController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
+        if (!(role.equals(Roles.Insurer.toString()) || role.equals(Roles.Staff.toString()))) throw new InvalidAuthException("Not Authorized");
 
         return userService.getAllPatients();
     }
