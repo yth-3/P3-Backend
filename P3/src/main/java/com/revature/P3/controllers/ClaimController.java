@@ -36,9 +36,11 @@ public class ClaimController {
         Principal principal = tokenService.retrievePrincipalFromToken(token);
         String role = principal.getRole();
 
-        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
+        if (!(role.equals(Roles.Insurer.toString()) || role.equals(Roles.Patient.toString()))) throw new InvalidAuthException("Not Authorized");
 
-        return claimService.getAllClaims();
+        if (role.equals(Roles.Insurer.toString())) return claimService.getAllClaims();
+
+        throw new RuntimeException("Not Implemented.");
     }
 
     @GetMapping(path="patient")
