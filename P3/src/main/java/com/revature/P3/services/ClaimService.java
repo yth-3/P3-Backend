@@ -6,6 +6,7 @@ import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.ClaimStatus;
 import com.revature.P3.entities.ClaimType;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.ClaimStatuses;
 import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
@@ -34,7 +35,7 @@ public class ClaimService {
         }
 
         ClaimType type = new ClaimType(req.getClaimType(), req.getClaimType());
-        ClaimStatus status = new ClaimStatus("CREATED", "CREATED");
+        ClaimStatus status = new ClaimStatus(ClaimStatuses.CREATED);
 
         long now = System.currentTimeMillis();
         Timestamp ts = new Timestamp(now);
