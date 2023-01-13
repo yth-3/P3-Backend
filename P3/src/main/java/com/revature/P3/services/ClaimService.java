@@ -2,6 +2,7 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.responses.Principal;
+import com.revature.P3.dtos.responses.Ticket;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.ClaimStatus;
 import com.revature.P3.entities.ClaimType;
@@ -13,6 +14,7 @@ import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
 import java.util.List;
@@ -27,7 +29,7 @@ public class ClaimService {
         this.userRepo = userRepo;
     }
 
-    public void createClaim(Principal principal, NewClaimRequest req) {
+    public Ticket createClaim(Principal principal, NewClaimRequest req) {
         User user = userRepo.findById(principal.getUserId())
                 .orElse(null);
         if (user == null) {
@@ -51,14 +53,16 @@ public class ClaimService {
                 (double) 0,
                 status);
         claimRepo.save(claim);
+
+        return new Ticket(claim);
     }
 
-    public List<Claim> getAllClaims() {
-        List<Claim> claims = new LinkedList<>();
+    public List<Ticket> getAllClaims() {
+        List<Ticket> tickets = new ArrayList<>();
         claimRepo.findAll().iterator().forEachRemaining(
-                (claim) -> claims.add(claim)
+                (claim) -> tickets.add(new Ticket(claim))
         );
-        return claims;
+        return tickets;
     }
 
     public List<Claim> getClaimsByUserId(String userId) {
