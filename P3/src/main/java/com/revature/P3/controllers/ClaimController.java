@@ -153,6 +153,20 @@ public class ClaimController {
         throw new InvalidAuthException("Not Authorized");
     }
 
+    @PutMapping(path="deny/{claimId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void denyClaim(@PathVariable(name="claimId") String claimId, HttpServletRequest req) {
+        String token = req.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
+
+        throw new InvalidAuthException("Not Authorized");
+    }
+
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
     public String handleInvalidAuthException (InvalidAuthException exception) {
