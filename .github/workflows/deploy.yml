@@ -37,7 +37,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd P3
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=221114-Java-React_P3-Backend
+          mvn -e -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=221114-Java-React_P3-Backend
         
   build2:
     runs-on: ubuntu-latest
