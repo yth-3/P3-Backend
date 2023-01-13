@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -31,4 +32,8 @@ public interface ClaimRepository extends CrudRepository<Claim, String> {
     @Modifying
     @Query(value = "UPDATE claims SET resolver_id = ?2 WHERE claim_id = ?1", nativeQuery = true)
     void setResolverId(String claimId, String resolverId);
+
+    @Modifying
+    @Query(value = "UPDATE claims SET resolved = ?2 WHERE claim_id = ?1", nativeQuery = true)
+    void setResolved(String claimId, Timestamp resolved);
 }
