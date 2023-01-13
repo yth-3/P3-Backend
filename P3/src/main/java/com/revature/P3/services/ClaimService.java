@@ -11,6 +11,7 @@ import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ import java.util.UUID;
 import java.util.List;
 
 @Service
+@Transactional
 public class ClaimService {
     private final ClaimRepository claimRepo;
     private final UserRepository userRepo;
