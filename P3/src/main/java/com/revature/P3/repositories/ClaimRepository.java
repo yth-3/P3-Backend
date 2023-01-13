@@ -1,6 +1,7 @@
 package com.revature.P3.repositories;
 
 import com.revature.P3.entities.Claim;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,8 @@ public interface ClaimRepository extends CrudRepository<Claim, String> {
 
     @Query(value = "SELECT * FROM claims AS A LEFT JOIN users AS B ON A.submitter_id = B.user_id WHERE B.role_id = '5'", nativeQuery = true)
     List<Claim> findAllStaffClaims();
+
+    @Modifying
+    @Query(value = "UPDATE claims SET resolver_id = ?2 WHERE claim_id = ?1", nativeQuery = true)
+    void setResolverId(String claimId, String resolverId);
 }
