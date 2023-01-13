@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ClaimRepository extends CrudRepository<Claim, String> {
+    @Query(value = "SELECT * FROM claims WHERE submitter_id = ?1", nativeQuery = true)
+    List<Claim> findAllByUserId(String userId);
+
     @Query(value = "SELECT * FROM claims WHERE submitter_id = '0'", nativeQuery = true)
     List<Claim> findAllPatientClaims();
 
