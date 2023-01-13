@@ -55,6 +55,10 @@ public class ClaimService {
         return claimRepo.findAll();
     }
 
+    public List<Claim> getClaimsByUserId(String userId) {
+        return null;
+    }
+
     public List<Claim> getPatientClaims() {
         return claimRepo.findAllPatientClaims();
     }
