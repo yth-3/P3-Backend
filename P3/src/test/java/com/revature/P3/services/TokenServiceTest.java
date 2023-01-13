@@ -12,7 +12,7 @@ public class TokenServiceTest {
 
     @Before
     public void init() {
-        sut = new TokenService(new JwtConfig());
+        sut = new TokenService(new JwtConfig("esrnfseklfnesklrfn"));
     }
 
     @Test
