@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -29,7 +30,7 @@ public class ClaimController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Iterable<Claim> viewAllClaims(HttpServletRequest req) {
+    public List<Claim> viewAllClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 

@@ -12,6 +12,7 @@ import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.UUID;
 import java.util.List;
 
@@ -51,12 +52,16 @@ public class ClaimService {
         claimRepo.save(claim);
     }
 
-    public Iterable<Claim> getAllClaims() {
-        return claimRepo.findAll();
+    public List<Claim> getAllClaims() {
+        List<Claim> claims = new LinkedList<>();
+        claimRepo.findAll().iterator().forEachRemaining(
+                (claim) -> claims.add(claim)
+        );
+        return claims;
     }
 
-    public Iterable<Claim> getClaimsByUserId(String userId) {
-        return null;
+    public List<Claim> getClaimsByUserId(String userId) {
+        return claimRepo.findAllByUserId(userId);
     }
 
     public List<Claim> getPatientClaims() {
