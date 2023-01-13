@@ -40,7 +40,9 @@ public class ClaimController {
 
         if (role.equals(Roles.Insurer.toString())) return claimService.getAllClaims();
 
-        throw new RuntimeException("Not Implemented.");
+        String userId = principal.getUserId();
+
+        return claimService.getClaimsByUserId(userId);
     }
 
     @GetMapping(path="patient")
