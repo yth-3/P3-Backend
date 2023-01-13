@@ -55,7 +55,7 @@ public class ClaimService {
         return claimRepo.findAll();
     }
 
-    public List<Claim> getClaimsByUserId(String userId) {
+    public Iterable<Claim> getClaimsByUserId(String userId) {
         return null;
     }
 
