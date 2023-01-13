@@ -144,7 +144,7 @@ public class ClaimServiceTest {
 
         // Assert
         Mockito.verify(mockClaimRepo, Mockito.times(1)).setResolverId(claimId,resolverId);
-        Mockito.verify(mockClaimRepo, Mockito.times(1)).setResolved(claimId, any());
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).setResolved(eq(claimId), any());
         Mockito.verify(mockClaimRepo, Mockito.times(1)).setSettled(claimId, settled);
         Mockito.verify(mockClaimRepo, Mockito.times(1)).setStatusId(claimId, ClaimStatuses.SETTLED.toString());
     }
