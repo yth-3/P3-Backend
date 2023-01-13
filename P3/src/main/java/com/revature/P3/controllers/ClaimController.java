@@ -2,6 +2,7 @@ package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.responses.Principal;
+import com.revature.P3.dtos.responses.Ticket;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.services.ClaimService;
@@ -30,7 +31,7 @@ public class ClaimController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<Claim> viewAllClaims(HttpServletRequest req) {
+    public List<Ticket> viewAllClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
@@ -43,7 +44,8 @@ public class ClaimController {
 
         String userId = principal.getUserId();
 
-        return claimService.getClaimsByUserId(userId);
+//        return claimService.getClaimsByUserId(userId);
+        return null;
     }
 
     @GetMapping(path="patient")
@@ -118,7 +120,7 @@ public class ClaimController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createClaim(@RequestBody(required = false) NewClaimRequest req, HttpServletRequest servletReq) {
+    public Ticket createClaim(@RequestBody(required = false) NewClaimRequest req, HttpServletRequest servletReq) {
         if (req == null || req.getClaimedAmount() <= 0 || req.getClaimType() == null || req.getDescription() == null) {
             throw new InvalidClaimException("Invalid claim request");
         }
@@ -130,13 +132,16 @@ public class ClaimController {
         String role = principal.getRole();
         if (!role.equals(Roles.Patient.toString())) throw new InvalidAuthException("Not Authorized");
 
+        Ticket result = null;
         try {
-            claimService.createClaim(principal, req);
+            result = claimService.createClaim(principal, req);
         } catch (InvalidUserException e) {
             throw e;
         } catch (Exception e) {
             throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
+
+        return result;
     }
 
     @PutMapping(path="settle/{claimId}")
