@@ -5,6 +5,7 @@ import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.Role;
 import com.revature.P3.entities.User;
+import com.revature.P3.enums.ClaimStatuses;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
@@ -128,5 +129,38 @@ public class ClaimServiceTest {
 
         // Assert
         Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllByUserId(user.getUserId());
+    }
+
+    @Test
+    public void test_approveClaim_givenClaimIdAndResolverIdAndSettled() {
+        // Arrange
+        String claimId = "0";
+        String resolverId = "1";
+        Double settled = 1.00;
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.approveClaim(claimId, resolverId, settled);
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).setResolverId(claimId,resolverId);
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).setResolved(claimId, any());
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).setSettled(claimId, settled);
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).setStatusId(claimId, ClaimStatuses.SETTLED.toString());
+    }
+
+    @Test
+    public void test_approveClaim_givenClaimIdAndResolverId() {
+        // Arrange
+        String claimId = "0";
+        String resolverId = "1";
+        Double settled = null;
+        ClaimService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.approveClaim(claimId, resolverId, settled);
+
+        // Assert
+        Mockito.verify(mockClaimRepo, Mockito.times(0)).setSettled(claimId, settled);
     }
 }
