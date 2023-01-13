@@ -27,6 +27,11 @@ public class JwtConfig {
         signingKey = new SecretKeySpec(saltyBytes, sigAlg.getJcaName());
     }
 
+    public JwtConfig(String salt) {
+        byte[] saltyBytes = DatatypeConverter.parseBase64Binary(salt);
+        signingKey = new SecretKeySpec(saltyBytes, sigAlg.getJcaName());
+    }
+
     public int getExpiration() {
         return expiration;
     }

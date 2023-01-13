@@ -34,6 +34,23 @@ public class ClaimType {
         this.type = claimType.toString();
     }
 
+    public ClaimType(String claimType) {
+        if (claimType.equals(ClaimTypes.CONSULTATION.toString())) {
+            this.typeId = "CONSULTATION";
+        }
+        else if (claimType.equals(ClaimTypes.MEDICATION.toString())) {
+            this.typeId = "MEDICATION";
+        }
+        else if (claimType.equals(ClaimTypes.PROCEDURE.toString())) {
+            this.typeId = "PROCEDURE";
+        }
+        else {
+            throw new InvalidClaimException("Invalid claim type specified");
+        }
+
+        this.type = claimType;
+    }
+
     public ClaimType(String typeId, String type) {
         this.typeId = typeId;
         this.type = type;
