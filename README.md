@@ -16,7 +16,7 @@ Our MVP start by focusing on dealing with the interaction between the patient an
 
 **[Backend Endpoint Root](http://compositecare-env.eba-hcsyxnmg.us-west-1.elasticbeanstalk.com/)**
 
-# Team
+## Team
 ### Scrum Master 
 Yuan Cao 
 
@@ -33,37 +33,37 @@ Yuan Cao
 ### DevOps Team
 Lead: Michael Robertson
 
-## Technology
+# Technology
 
-### Application Layer
+## Application Layer
 
-#### Language
+### Language
 
 Java 8
 
-#### Framework
+### Framework
 
 Spring Boot
 
-#### Libraries
+### Libraries
 
-##### Testing
+#### Testing
 
 JUnit
 
 Mockito
 
-##### Privacy and Protection
+#### Privacy and Protection
 
 JSON Web Tokens
 
 Argon2
 
-### Persistent Layer
+## Persistent Layer
 
-### DevOps
+## DevOps
 
-#### Pipeline
+### Pipeline
 
 GitHub/GitHub Actions
 
@@ -77,7 +77,7 @@ AWS S3
 
 AWS Elastic Beanstalk
 
-### Tools
+## Tools
 
 Apache Maven
 
