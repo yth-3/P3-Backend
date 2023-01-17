@@ -11,6 +11,9 @@ jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ fromJSON(steps.report.outputs.response).status }}
+      
     steps:
       - uses: actions/checkout@v2
         with:
@@ -62,11 +65,10 @@ jobs:
           url: 'http://sonarcloud.io/api/qualitygates/project_status?projectKey=221114-Java-React_P3-Backend'
           method: 'GET'
           bearerToken: ${{ secrets.BEARER_TOKEN }}
-          
-      - name: Echo Response
-        run: echo ${{ steps.report.outputs.response }}
         
   build2:
+    needs: build
+    if: ${{ needs.build.outputs.status }} == 'OK'
     runs-on: ubuntu-latest
     environment: env
     steps:
