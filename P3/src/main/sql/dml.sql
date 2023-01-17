@@ -14,6 +14,7 @@ INSERT INTO claim_types(type_id, type) VALUES('PROCEDURE', 'PROCEDURE');
 -- Set Up Claim Statuses in Database
 INSERT INTO claim_statuses(status_id, status) VALUES('CREATED', 'CREATED');
 INSERT INTO claim_statuses(status_id, status) VALUES('SETTLED', 'SETTLED');
+INSERT INTO claim_statuses(status_id, status) VALUES('DENIED', 'DENIED');
 
 -- Set Up Example Users
 INSERT INTO users

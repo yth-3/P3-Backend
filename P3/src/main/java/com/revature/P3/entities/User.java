@@ -1,7 +1,5 @@
 package com.revature.P3.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 

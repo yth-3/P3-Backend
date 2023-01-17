@@ -10,12 +10,14 @@ import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.List;
 
 @Service
+@Transactional
 public class ClaimService {
     private final ClaimRepository claimRepo;
     private final UserRepository userRepo;
@@ -73,5 +75,18 @@ public class ClaimService {
 
     public List<Claim> getStaffClaims() {
         return claimRepo.findAllStaffClaims();
+    }
+
+    public void approveClaim(String claimId, String resolverId, Double settled) {
+        claimRepo.setResolverId(claimId, resolverId);
+        claimRepo.setResolved(claimId, new Timestamp(System.currentTimeMillis()));
+        if (settled != null) claimRepo.setSettled(claimId,settled);
+        claimRepo.setStatusId(claimId, new ClaimStatus(ClaimStatuses.SETTLED).getStatusId());
+    }
+
+    public void denyClaim(String claimId, String resolverId) {
+        claimRepo.setResolverId(claimId, resolverId);
+        claimRepo.setResolved(claimId, new Timestamp(System.currentTimeMillis()));
+        claimRepo.setStatusId(claimId, new ClaimStatus(ClaimStatuses.DENIED).getStatusId());
     }
 }
