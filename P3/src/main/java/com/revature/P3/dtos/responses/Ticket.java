@@ -1,7 +1,5 @@
 package com.revature.P3.dtos.responses;
 
-import com.revature.P3.entities.Claim;
-
 import java.util.Arrays;
 
 public class Ticket {
@@ -33,20 +31,6 @@ public class Ticket {
         this.resolved = resolved;
         this.settled = settled;
         this.status = status;
-    }
-
-    public Ticket(Claim claim) {
-        this.claimId = claim.getClaimId();
-        this.submitterId = claim.getSubmitter().getUserId();
-        this.submitted = claim.getSubmitted().toString();
-        this.claimed = claim.getClaimed();
-        this.typeId = claim.getType().getType();
-        this.description = claim.getDescription();
-        this.receipt = claim.getReceipt();
-        this.resolverId = claim.getResolver() == null ? null : claim.getResolver().getUserId();
-        this.resolved = claim.getResolved() == null? null : claim.getResolved().toString();
-        this.settled = claim.getSettled();
-        this.status = claim.getStatus().getStatus();
     }
 
     public String getClaimId() {
