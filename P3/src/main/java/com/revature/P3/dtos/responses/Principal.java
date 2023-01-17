@@ -1,6 +1,7 @@
 package com.revature.P3.dtos.responses;
 
 import com.revature.P3.entities.Role;
+import com.revature.P3.entities.User;
 
 import java.sql.Timestamp;
 
@@ -15,6 +16,17 @@ public class Principal {
 
     public Principal() {
         super();
+    }
+
+    public Principal(User user) {
+        this(
+                user.getUserId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRegistered(),
+                user.getActive(),
+                user.getRole()
+        );
     }
 
     public Principal(String userId, String username, String email, String registered, boolean active, String role) {

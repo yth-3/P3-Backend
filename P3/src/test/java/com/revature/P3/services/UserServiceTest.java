@@ -238,4 +238,16 @@ public class UserServiceTest {
         assertEquals(user.getRole().getRole(),principal.getRole());
         assertEquals(null,principal.getToken());
     }
+
+    @Test
+    public void test_getAllPatients_givenNothing() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+
+        // Act
+        spySut.getAllPatients();
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).findAllPatients();
+    }
 }
