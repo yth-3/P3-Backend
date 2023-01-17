@@ -54,6 +54,17 @@ jobs:
         run: |
           cd P3
           mvn -e -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=221114-Java-React_P3-Backend
+          
+      - name: Get Status
+        id: report
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'http://sonarcloud.io/api/qualitygates/project_status?projectKey=221114-Java-React_P3-Backend'
+          method: 'GET'
+          bearerToken: ${{ secrets.BEARER_TOKEN }}
+          
+      - name: Echo Response
+        run: echo ${{ steps.report.outputs.response }}
         
   build2:
     runs-on: ubuntu-latest
