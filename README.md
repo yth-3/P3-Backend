@@ -22,10 +22,12 @@ Yuan Cao
 
 ### Frontend Team 
 Lead: M Ryan Sullivan
+
 Ashley Chancellor
 
 ### Backend Team
 Lead: Paul Franklin 
+
 Yuan Cao 
 
 ### DevOps Team
@@ -48,11 +50,13 @@ Spring Boot
 ##### Testing
 
 JUnit
+
 Mockito
 
 ##### Privacy and Protection
 
 JSON Web Tokens
+
 Argon2
 
 ### Persistent Layer
@@ -62,16 +66,21 @@ Argon2
 #### Pipeline
 
 GitHub/GitHub Actions
+
 SonarCloud
 
 #### Deploy Target
 
 AWS RDS
+
 AWS S3
+
 AWS Elastic Beanstalk
 
 ### Tools
 
 Apache Maven
+
 Git
+
 Intellij Idea Community Edition
