@@ -26,6 +26,7 @@ Ashley Chancellor
 
 ### Backend Team
 Lead: Paul Franklin 
+Yuan Cao 
 
 ### DevOps Team
 Lead: Michael Robertson
