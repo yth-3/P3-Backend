@@ -6,14 +6,12 @@ import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.ClaimStatus;
 import com.revature.P3.entities.ClaimType;
 import com.revature.P3.entities.User;
-import com.revature.P3.enums.ClaimStatuses;
 import com.revature.P3.repositories.ClaimRepository;
 import com.revature.P3.repositories.UserRepository;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.LinkedList;
 import java.util.UUID;
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class ClaimService {
         }
 
         ClaimType type = new ClaimType(req.getClaimType(), req.getClaimType());
-        ClaimStatus status = new ClaimStatus(ClaimStatuses.CREATED);
+        ClaimStatus status = new ClaimStatus("CREATED", "CREATED");
 
         long now = System.currentTimeMillis();
         Timestamp ts = new Timestamp(now);
@@ -53,16 +51,8 @@ public class ClaimService {
         claimRepo.save(claim);
     }
 
-    public List<Claim> getAllClaims() {
-        List<Claim> claims = new LinkedList<>();
-        claimRepo.findAll().iterator().forEachRemaining(
-                (claim) -> claims.add(claim)
-        );
-        return claims;
-    }
-
-    public List<Claim> getClaimsByUserId(String userId) {
-        return claimRepo.findAllByUserId(userId);
+    public Iterable<Claim> getAllClaims() {
+        return claimRepo.findAll();
     }
 
     public List<Claim> getPatientClaims() {

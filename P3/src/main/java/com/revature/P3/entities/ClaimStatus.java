@@ -1,8 +1,5 @@
 package com.revature.P3.entities;
 
-import com.revature.P3.enums.ClaimStatuses;
-import com.revature.P3.utils.custom_exceptions.InvalidClaimException;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,20 +12,6 @@ public class ClaimStatus {
     private String status;
 
     public ClaimStatus() {
-    }
-
-    public ClaimStatus(ClaimStatuses claimStatus) {
-        if (claimStatus.equals(ClaimStatuses.CREATED)) {
-            this.statusId = "CREATED";
-        }
-        else if (claimStatus.equals(ClaimStatuses.SETTLED)) {
-            this.statusId = "SETTLED";
-        }
-        else {
-            throw new InvalidClaimException("Invalid claim status specified");
-        }
-
-        this.status = claimStatus.toString();
     }
 
     public ClaimStatus(String statusId, String status) {
