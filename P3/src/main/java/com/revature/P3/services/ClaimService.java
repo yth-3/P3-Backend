@@ -2,6 +2,7 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.responses.Principal;
+import com.revature.P3.dtos.responses.Ticket;
 import com.revature.P3.entities.Claim;
 import com.revature.P3.entities.ClaimStatus;
 import com.revature.P3.entities.ClaimType;
@@ -55,36 +56,60 @@ public class ClaimService {
         claimRepo.save(claim);
     }
 
-    public List<Claim> getAllClaims() {
-        List<Claim> claims = new LinkedList<>();
+    public List<Ticket> getAllClaims() {
+        List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAll().iterator().forEachRemaining(
-                (claim) -> claims.add(claim)
+                (claim) -> tickets.add(new Ticket(claim))
         );
-        return claims;
+        return tickets;
     }
 
-    public List<Claim> getClaimsByUserId(String userId) {
-        return claimRepo.findAllByUserId(userId);
+    public List<Ticket> getClaimsByUserId(String userId) {
+        List<Ticket> tickets = new LinkedList<>();
+        claimRepo.findAllByUserId(userId).iterator().forEachRemaining(
+                (claim) -> tickets.add(new Ticket(claim))
+        );
+        return tickets;
     }
 
-    public List<Claim> getPatientClaims() {
-        return claimRepo.findAllPatientClaims();
+    public List<Ticket> getPatientClaims() {
+        List<Ticket> tickets = new LinkedList<>();
+        claimRepo.findAllPatientClaims().iterator().forEachRemaining(
+                (claim) -> tickets.add(new Ticket(claim))
+        );
+        return tickets;
     }
 
-    public List<Claim> getNurseClaims() {
-        return claimRepo.findAllNurseClaims();
+    public List<Ticket> getNurseClaims() {
+        List<Ticket> tickets = new LinkedList<>();
+        claimRepo.findAllNurseClaims().iterator().forEachRemaining(
+                (claim) -> tickets.add(new Ticket(claim))
+        );
+        return tickets;
     }
 
-    public List<Claim> getDoctorClaims() {
-        return claimRepo.findAllDoctorClaims();
+    public List<Ticket> getDoctorClaims() {
+        List<Ticket> tickets = new LinkedList<>();
+        claimRepo.findAllDoctorClaims().iterator().forEachRemaining(
+                (claim) -> tickets.add(new Ticket(claim))
+        );
+        return tickets;
     }
 
-    public List<Claim> getInsurerClaims() {
-        return claimRepo.findAllInsurerClaims();
+    public List<Ticket> getInsurerClaims() {
+        List<Ticket> tickets = new LinkedList<>();
+        claimRepo.findAllInsurerClaims().iterator().forEachRemaining(
+                (claim) -> tickets.add(new Ticket(claim))
+        );
+        return tickets;
     }
 
-    public List<Claim> getStaffClaims() {
-        return claimRepo.findAllStaffClaims();
+    public List<Ticket> getStaffClaims() {
+        List<Ticket> tickets = new LinkedList<>();
+        claimRepo.findAllStaffClaims().iterator().forEachRemaining(
+                (claim) -> tickets.add(new Ticket(claim))
+        );
+        return tickets;
     }
 
     public void approveClaim(String claimId, String resolverId, Double settled) {
