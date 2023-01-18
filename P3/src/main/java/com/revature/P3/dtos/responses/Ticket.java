@@ -1,6 +1,7 @@
 package com.revature.P3.dtos.responses;
 
 import com.revature.P3.entities.Claim;
+import com.revature.P3.enums.ClaimStatuses;
 
 import java.util.Arrays;
 
@@ -31,7 +32,20 @@ public class Ticket {
         this.receipt = claim.getReceipt();
         this.resolverId = claim.getResolver() == null ? null : claim.getResolver().getUserId();
         this.resolved = claim.getResolved() == null? null : claim.getResolved().toString();
-        this.settled = claim.getSettled();
+        if (claim.getStatus().getStatus().equals(ClaimStatuses.SETTLED.toString())) {
+            if (claim.getSettled().equals(0.00)) {
+                this.settled = claim.getClaimed();
+            }
+            else {
+                this.settled = claim.getSettled();
+            }
+        }
+        else if (claim.getStatus().getStatus().equals(ClaimStatuses.DENIED.toString())) {
+            this.settled = 0.00;
+        }
+        else {
+            this.settled = claim.getSettled();
+        }
         this.status = claim.getStatus().getStatus();
     }
 
