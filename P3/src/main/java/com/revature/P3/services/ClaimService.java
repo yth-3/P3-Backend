@@ -59,7 +59,7 @@ public class ClaimService {
     public List<Ticket> getAllClaims() {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAll().iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
@@ -67,7 +67,7 @@ public class ClaimService {
     public List<Ticket> getClaimsByUserId(String userId) {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAllByUserId(userId).iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
@@ -75,7 +75,7 @@ public class ClaimService {
     public List<Ticket> getPatientClaims() {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAllPatientClaims().iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
@@ -83,7 +83,7 @@ public class ClaimService {
     public List<Ticket> getNurseClaims() {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAllNurseClaims().iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
@@ -91,7 +91,7 @@ public class ClaimService {
     public List<Ticket> getDoctorClaims() {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAllDoctorClaims().iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
@@ -99,7 +99,7 @@ public class ClaimService {
     public List<Ticket> getInsurerClaims() {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAllInsurerClaims().iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
@@ -107,7 +107,7 @@ public class ClaimService {
     public List<Ticket> getStaffClaims() {
         List<Ticket> tickets = new LinkedList<>();
         claimRepo.findAllStaffClaims().iterator().forEachRemaining(
-                (claim) -> tickets.add(new Ticket(claim))
+                claim -> tickets.add(new Ticket(claim))
         );
         return tickets;
     }
