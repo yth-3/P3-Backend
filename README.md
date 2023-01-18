@@ -18,69 +18,74 @@ Our MVP start by focusing on dealing with the interaction between the patient an
 
 ## Team
 ### Scrum Master 
+```
 Yuan Cao 
-
+```
 ### Frontend Team 
+```
 Lead: M Ryan Sullivan
 
 Ashley Chancellor
-
+```
 ### Backend Team
+```
 Lead: Paul Franklin 
 
 Yuan Cao 
-
+```
 ### DevOps Team
+```
 Lead: Michael Robertson
-
+```
 # Technology
 
 ## Application Layer
 
 ### Language
-
+```
 Java 8
-
+```
 ### Framework
-
+```
 Spring Boot
-
+```
 ### Libraries
 
 #### Testing
-
+```
 JUnit
 
 Mockito
-
+```
 #### Privacy and Protection
-
+```
 JSON Web Tokens
 
 Argon2
-
+```
 ## Persistent Layer
 
 ## DevOps
 
 ### Pipeline
-
+```
 GitHub/GitHub Actions
 
 SonarCloud
-
-#### Deploy Target
-
+```
+### Deploy Target
+```
 AWS RDS
 
 AWS S3
 
 AWS Elastic Beanstalk
-
+```
 ## Tools
-
+```
 Apache Maven
 
 Git
 
 Intellij Idea Community Edition
+```
