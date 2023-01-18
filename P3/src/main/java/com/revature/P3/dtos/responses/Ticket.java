@@ -21,20 +21,6 @@ public class Ticket {
         super();
     }
 
-    public Ticket(String claimId, String submitterId, String submitted, double claimed, String typeId, String description, byte[] receipt, String resolverId, String resolved, double settled, String status) {
-        this.claimId = claimId;
-        this.submitterId = submitterId;
-        this.submitted = submitted;
-        this.claimed = claimed;
-        this.typeId = typeId;
-        this.description = description;
-        this.receipt = receipt;
-        this.resolverId = resolverId;
-        this.resolved = resolved;
-        this.settled = settled;
-        this.status = status;
-    }
-
     public Ticket(Claim claim) {
         this.claimId = claim.getClaimId();
         this.submitterId = claim.getSubmitter().getUserId();
