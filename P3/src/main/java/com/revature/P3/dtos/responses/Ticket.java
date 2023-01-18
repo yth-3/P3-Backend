@@ -1,22 +1,23 @@
 package com.revature.P3.dtos.responses;
 
 import com.revature.P3.entities.Claim;
-import com.revature.P3.enums.ClaimStatuses;
+import com.revature.P3.entities.ClaimStatus;
+import com.revature.P3.entities.ClaimType;
 
 import java.util.Arrays;
 
 public class Ticket {
     private String claimId;
-    private String submitterId;
+    private Principal submitterId;
     private String submitted;
     private double claimed;
-    private String typeId;
+    private ClaimType type;
     private String description;
     private byte[] receipt;
-    private String resolverId;
+    private Principal resolverId;
     private String resolved;
     private double settled;
-    private String status;
+    private ClaimStatus status;
 
     public Ticket() {
         super();
@@ -24,16 +25,16 @@ public class Ticket {
 
     public Ticket(Claim claim) {
         this.claimId = claim.getClaimId();
-        this.submitterId = claim.getSubmitter().getUserId();
+        this.submitterId = new Principal(claim.getSubmitter());
         this.submitted = claim.getSubmitted().toString();
         this.claimed = claim.getClaimed();
-        this.typeId = claim.getType().getType();
+        this.type = claim.getType();
         this.description = claim.getDescription();
         this.receipt = claim.getReceipt();
-        this.resolverId = claim.getResolver() == null ? null : claim.getResolver().getUserId();
+        this.resolverId = claim.getResolver() == null ? null : new Principal(claim.getResolver());
         this.resolved = claim.getResolved() == null? null : claim.getResolved().toString();
         this.settled = claim.getSettled();
-        this.status = claim.getStatus().getStatus();
+        this.status = claim.getStatus();
     }
 
     public String getClaimId() {
@@ -44,11 +45,11 @@ public class Ticket {
         this.claimId = claimId;
     }
 
-    public String getSubmitterId() {
+    public Principal getSubmitterId() {
         return submitterId;
     }
 
-    public void setSubmitterId(String submitterId) {
+    public void setSubmitterId(Principal submitterId) {
         this.submitterId = submitterId;
     }
 
@@ -68,12 +69,12 @@ public class Ticket {
         this.claimed = claimed;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public ClaimType getType() {
+        return type;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
+    public void setType(ClaimType typeId) {
+        this.type = typeId;
     }
 
     public String getDescription() {
@@ -92,11 +93,11 @@ public class Ticket {
         this.receipt = receipt;
     }
 
-    public String getResolverId() {
+    public Principal getResolverId() {
         return resolverId;
     }
 
-    public void setResolverId(String resolverId) {
+    public void setResolverId(Principal resolverId) {
         this.resolverId = resolverId;
     }
 
@@ -116,11 +117,11 @@ public class Ticket {
         this.settled = settled;
     }
 
-    public String getStatus() {
+    public ClaimStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ClaimStatus status) {
         this.status = status;
     }
 
@@ -131,7 +132,7 @@ public class Ticket {
                 ", submitterId='" + submitterId + '\'' +
                 ", submitted='" + submitted + '\'' +
                 ", claimed=" + claimed +
-                ", typeId='" + typeId + '\'' +
+                ", typeId='" + type+ '\'' +
                 ", description='" + description + '\'' +
                 ", receipt=" + Arrays.toString(receipt) +
                 ", resolverId='" + resolverId + '\'' +
