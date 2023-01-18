@@ -1,22 +1,23 @@
 package com.revature.P3.dtos.responses;
 
 import com.revature.P3.entities.Claim;
-import com.revature.P3.enums.ClaimStatuses;
+import com.revature.P3.entities.ClaimStatus;
+import com.revature.P3.entities.ClaimType;
 
 import java.util.Arrays;
 
 public class Ticket {
     private String claimId;
-    private String submitterId;
+    private Principal submitter;
     private String submitted;
     private double claimed;
-    private String typeId;
+    private ClaimType type;
     private String description;
     private byte[] receipt;
-    private String resolverId;
+    private Principal resolver;
     private String resolved;
     private double settled;
-    private String status;
+    private ClaimStatus status;
 
     public Ticket() {
         super();
@@ -24,16 +25,16 @@ public class Ticket {
 
     public Ticket(Claim claim) {
         this.claimId = claim.getClaimId();
-        this.submitterId = claim.getSubmitter().getUserId();
+        this.submitter = new Principal(claim.getSubmitter());
         this.submitted = claim.getSubmitted().toString();
         this.claimed = claim.getClaimed();
-        this.typeId = claim.getType().getType();
+        this.type = claim.getType();
         this.description = claim.getDescription();
         this.receipt = claim.getReceipt();
-        this.resolverId = claim.getResolver() == null ? null : claim.getResolver().getUserId();
+        this.resolver = claim.getResolver() == null ? null : new Principal(claim.getResolver());
         this.resolved = claim.getResolved() == null? null : claim.getResolved().toString();
         this.settled = claim.getSettled();
-        this.status = claim.getStatus().getStatus();
+        this.status = claim.getStatus();
     }
 
     public String getClaimId() {
@@ -44,12 +45,12 @@ public class Ticket {
         this.claimId = claimId;
     }
 
-    public String getSubmitterId() {
-        return submitterId;
+    public Principal getSubmitter() {
+        return submitter;
     }
 
-    public void setSubmitterId(String submitterId) {
-        this.submitterId = submitterId;
+    public void setSubmitter(Principal submitter) {
+        this.submitter = submitter;
     }
 
     public String getSubmitted() {
@@ -68,12 +69,12 @@ public class Ticket {
         this.claimed = claimed;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public ClaimType getType() {
+        return type;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
+    public void setType(ClaimType typeId) {
+        this.type = typeId;
     }
 
     public String getDescription() {
@@ -92,12 +93,12 @@ public class Ticket {
         this.receipt = receipt;
     }
 
-    public String getResolverId() {
-        return resolverId;
+    public Principal getResolver() {
+        return resolver;
     }
 
-    public void setResolverId(String resolverId) {
-        this.resolverId = resolverId;
+    public void setResolver(Principal resolver) {
+        this.resolver = resolver;
     }
 
     public String getResolved() {
@@ -116,11 +117,11 @@ public class Ticket {
         this.settled = settled;
     }
 
-    public String getStatus() {
+    public ClaimStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ClaimStatus status) {
         this.status = status;
     }
 
@@ -128,13 +129,13 @@ public class Ticket {
     public String toString() {
         return "Ticket{" +
                 "claimId='" + claimId + '\'' +
-                ", submitterId='" + submitterId + '\'' +
+                ", submitterId='" + submitter + '\'' +
                 ", submitted='" + submitted + '\'' +
                 ", claimed=" + claimed +
-                ", typeId='" + typeId + '\'' +
+                ", typeId='" + type+ '\'' +
                 ", description='" + description + '\'' +
                 ", receipt=" + Arrays.toString(receipt) +
-                ", resolverId='" + resolverId + '\'' +
+                ", resolverId='" + resolver + '\'' +
                 ", resolved='" + resolved + '\'' +
                 ", settled=" + settled +
                 ", status='" + status + '\'' +
