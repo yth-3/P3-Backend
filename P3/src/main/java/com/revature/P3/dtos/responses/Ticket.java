@@ -8,13 +8,13 @@ import java.util.Arrays;
 
 public class Ticket {
     private String claimId;
-    private Principal submitterId;
+    private Principal submitter;
     private String submitted;
     private double claimed;
     private ClaimType type;
     private String description;
     private byte[] receipt;
-    private Principal resolverId;
+    private Principal resolver;
     private String resolved;
     private double settled;
     private ClaimStatus status;
@@ -25,13 +25,13 @@ public class Ticket {
 
     public Ticket(Claim claim) {
         this.claimId = claim.getClaimId();
-        this.submitterId = new Principal(claim.getSubmitter());
+        this.submitter = new Principal(claim.getSubmitter());
         this.submitted = claim.getSubmitted().toString();
         this.claimed = claim.getClaimed();
         this.type = claim.getType();
         this.description = claim.getDescription();
         this.receipt = claim.getReceipt();
-        this.resolverId = claim.getResolver() == null ? null : new Principal(claim.getResolver());
+        this.resolver = claim.getResolver() == null ? null : new Principal(claim.getResolver());
         this.resolved = claim.getResolved() == null? null : claim.getResolved().toString();
         this.settled = claim.getSettled();
         this.status = claim.getStatus();
@@ -45,12 +45,12 @@ public class Ticket {
         this.claimId = claimId;
     }
 
-    public Principal getSubmitterId() {
-        return submitterId;
+    public Principal getSubmitter() {
+        return submitter;
     }
 
-    public void setSubmitterId(Principal submitterId) {
-        this.submitterId = submitterId;
+    public void setSubmitter(Principal submitter) {
+        this.submitter = submitter;
     }
 
     public String getSubmitted() {
@@ -93,12 +93,12 @@ public class Ticket {
         this.receipt = receipt;
     }
 
-    public Principal getResolverId() {
-        return resolverId;
+    public Principal getResolver() {
+        return resolver;
     }
 
-    public void setResolverId(Principal resolverId) {
-        this.resolverId = resolverId;
+    public void setResolver(Principal resolver) {
+        this.resolver = resolver;
     }
 
     public String getResolved() {
@@ -129,13 +129,13 @@ public class Ticket {
     public String toString() {
         return "Ticket{" +
                 "claimId='" + claimId + '\'' +
-                ", submitterId='" + submitterId + '\'' +
+                ", submitterId='" + submitter + '\'' +
                 ", submitted='" + submitted + '\'' +
                 ", claimed=" + claimed +
                 ", typeId='" + type+ '\'' +
                 ", description='" + description + '\'' +
                 ", receipt=" + Arrays.toString(receipt) +
-                ", resolverId='" + resolverId + '\'' +
+                ", resolverId='" + resolver + '\'' +
                 ", resolved='" + resolved + '\'' +
                 ", settled=" + settled +
                 ", status='" + status + '\'' +
