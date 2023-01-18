@@ -32,20 +32,7 @@ public class Ticket {
         this.receipt = claim.getReceipt();
         this.resolverId = claim.getResolver() == null ? null : claim.getResolver().getUserId();
         this.resolved = claim.getResolved() == null? null : claim.getResolved().toString();
-        if (claim.getStatus().getStatus().equals(ClaimStatuses.SETTLED.toString())) {
-            if (claim.getSettled().equals(0.00)) {
-                this.settled = claim.getClaimed();
-            }
-            else {
-                this.settled = claim.getSettled();
-            }
-        }
-        else if (claim.getStatus().getStatus().equals(ClaimStatuses.DENIED.toString())) {
-            this.settled = 0.00;
-        }
-        else {
-            this.settled = claim.getSettled();
-        }
+        this.settled = claim.getSettled();
         this.status = claim.getStatus().getStatus();
     }
 
