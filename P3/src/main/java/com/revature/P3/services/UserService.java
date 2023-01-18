@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
@@ -77,6 +76,7 @@ public class UserService {
         return allUsersList;
     }
 
+    @Transactional
     public void activateUser(String userId) {
         try {
             userRepository.activateUser(userId);
@@ -86,6 +86,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void deactivateUser(String userId) {
         try {
             userRepository.deactivateUser(userId);
