@@ -64,7 +64,9 @@ JSON Web Tokens
 Argon2
 ```
 ## Persistent Layer
-
+```
+PostgreSQL
+```
 ## DevOps
 
 ### Pipeline
