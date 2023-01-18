@@ -3,7 +3,7 @@ package com.revature.P3.controllers;
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.requests.NewClaimReviewRequest;
 import com.revature.P3.dtos.responses.Principal;
-import com.revature.P3.entities.Claim;
+import com.revature.P3.dtos.responses.Ticket;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.services.ClaimService;
 import com.revature.P3.services.TokenService;
@@ -31,7 +31,7 @@ public class ClaimController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<Claim> viewAllClaims(HttpServletRequest req) {
+    public List<Ticket> viewAllClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
@@ -49,7 +49,7 @@ public class ClaimController {
 
     @GetMapping(path="patient")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Iterable<Claim> viewPatientClaims(HttpServletRequest req) {
+    public Iterable<Ticket> viewPatientClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
@@ -63,7 +63,7 @@ public class ClaimController {
 
     @GetMapping(path="nurse")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Iterable<Claim> viewNurseClaims(HttpServletRequest req) {
+    public Iterable<Ticket> viewNurseClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
@@ -77,7 +77,7 @@ public class ClaimController {
 
     @GetMapping(path="doctor")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Iterable<Claim> viewDoctorClaims(HttpServletRequest req) {
+    public Iterable<Ticket> viewDoctorClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
@@ -91,7 +91,7 @@ public class ClaimController {
 
     @GetMapping(path="insurer")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Iterable<Claim> viewInsurerClaims(HttpServletRequest req) {
+    public Iterable<Ticket> viewInsurerClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
@@ -105,7 +105,7 @@ public class ClaimController {
 
     @GetMapping(path="staff")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Iterable<Claim> viewStaffClaims(HttpServletRequest req) {
+    public Iterable<Ticket> viewStaffClaims(HttpServletRequest req) {
         String token = req.getHeader("authorization");
         if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
 
