@@ -106,10 +106,18 @@ public class UserService {
     }
 
     public Principal getUser(String userId) {
-        User user = userRepository.findAllByUsername(userId);
-        if (user == null) throw new InvalidUserException("Invalid Username");
-
+        User user = this.findByUserId(userId);
         return new Principal(user.getUserId(), user.getUsername(), user.getEmail(), user.getRegistered(), user.getActive(), user.getRole());
+    }
+
+    public boolean isDuplicateUsername(String username) {
+        User user = userRepository.findAllByUsername(username);
+        return user != null;
+    }
+
+    public boolean isDuplicateEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user != null;
     }
 
     private void createUser(NewUserRequest req, Roles role) {
@@ -118,11 +126,22 @@ public class UserService {
         Role newRole = new Role(role);
         User newUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword(), req.getEmail(), nowTimestamp, true, newRole);
         try {
+            if (isDuplicateUsername(newUser.getUsername())) throw new InvalidUserException("Duplicate user found");
+            if (isDuplicateEmail(newUser.getEmail())) throw new InvalidUserException("Duplicate email found");
             userRepository.save(newUser);
         } catch (DataIntegrityViolationException exception) {
             throw new InvalidUserException("Invalid signup request or duplicate user found");
+        } catch (InvalidUserException exception) {
+            throw exception;
         } catch (Exception exception) {
             throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
+    }
+
+    private User findByUserId(String userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user == null) throw new InvalidUserException("Invalid user id");
+
+        return user;
     }
 }
