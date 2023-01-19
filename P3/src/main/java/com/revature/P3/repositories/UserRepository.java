@@ -15,6 +15,8 @@ public interface UserRepository extends CrudRepository<User, String> {
 
     User findAllByUsername(String username);
 
+    User findByEmail(String email);
+
     @Modifying
     @Query(value = "UPDATE users SET is_active = true WHERE user_id = ?1", nativeQuery = true)
     void activateUser(String userId);
