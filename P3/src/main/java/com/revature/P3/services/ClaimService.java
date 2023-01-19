@@ -80,6 +80,15 @@ public class ClaimService {
         return tickets;
     }
 
+    public Ticket getClaim(String claimId) {
+        Claim claim = claimRepo.findById(claimId).orElse(null);
+        if (claim == null) {
+            return null;
+        }
+
+        return new Ticket(claim);
+    }
+
     public void approveClaim(String claimId, String resolverId, Double settled) {
         claimRepo.setResolverId(claimId, resolverId);
         claimRepo.setResolved(claimId, new Timestamp(System.currentTimeMillis()));

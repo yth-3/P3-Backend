@@ -84,6 +84,20 @@ public class ClaimController {
         }
     }
 
+    @GetMapping(path="id")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Ticket getClaim(@RequestParam(name="id") String claimId, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (!role.equals(Roles.Insurer.toString())) throw new InvalidAuthException("Not Authorized");
+
+        return claimService.getClaim(claimId);
+    }
+
     @PutMapping(path="approve/{claimId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void approveClaim(@PathVariable(name="claimId") String claimId, @RequestBody(required = false) NewClaimReviewRequest req, HttpServletRequest servletReq) {
