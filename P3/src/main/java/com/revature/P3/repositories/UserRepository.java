@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
+    @Query(value = "SELECT * FROM users WHERE user_id = ?1", nativeQuery = true)
+    User findByUserId(String userId);
+
     User findAllByUsername(String username);
 
     @Modifying
