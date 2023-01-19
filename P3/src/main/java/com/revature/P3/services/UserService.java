@@ -106,9 +106,7 @@ public class UserService {
     }
 
     public Principal getUser(String userId) {
-        User user = userRepository.findAllByUsername(userId);
-        if (user == null) throw new InvalidUserException("Invalid Username");
-
+        User user = this.findByUserId(userId);
         return new Principal(user.getUserId(), user.getUsername(), user.getEmail(), user.getRegistered(), user.getActive(), user.getRole());
     }
 
@@ -124,5 +122,12 @@ public class UserService {
         } catch (Exception exception) {
             throw new BadGatewayException("Bad Gateway; Try Again Later");
         }
+    }
+
+    private User findByUserId(String userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user == null) throw new InvalidUserException("Invalid user id");
+
+        return user;
     }
 }
