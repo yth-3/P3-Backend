@@ -2,9 +2,8 @@ package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewClaimRequest;
 import com.revature.P3.dtos.responses.Principal;
-import com.revature.P3.entities.Claim;
-import com.revature.P3.entities.Role;
-import com.revature.P3.entities.User;
+import com.revature.P3.dtos.responses.Ticket;
+import com.revature.P3.entities.*;
 import com.revature.P3.enums.ClaimStatuses;
 import com.revature.P3.enums.Roles;
 import com.revature.P3.repositories.ClaimRepository;
@@ -16,6 +15,7 @@ import org.mockito.Mockito;
 import java.sql.Timestamp;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -26,6 +26,8 @@ public class ClaimServiceTest {
     private ClaimService sut;
     private NewClaimRequest validClaimReq;
     private Principal validPrincipal;
+    private Claim validClaim;
+    private User validSubmitter;
 
     @Before
     public void init() {
@@ -34,6 +36,30 @@ public class ClaimServiceTest {
                                               "PreventativeCare",
                                               "Went to see the doc for annual physical");
         validPrincipal = new Principal("userId", "username", "email", "registered", true, "Patient");
+
+        validSubmitter = new User(
+                "validId",
+                "validUsername",
+                "validPassword",
+                "validEmail",
+                new Timestamp(0),
+                true,
+                new Role()
+        );
+
+        validClaim = new Claim(
+                "claimId",
+                validSubmitter,
+                new Timestamp(0),
+                100.00,
+                new ClaimType(),
+                "description",
+                null,
+                null,
+                null,
+                0.00,
+                new ClaimStatus()
+        );
     }
 
     @Test
@@ -70,54 +96,6 @@ public class ClaimServiceTest {
     }
 
     @Test
-    public void test_getNurseClaims_givenNothing() {
-        // Arrange
-        ClaimService spySut = Mockito.spy(sut);
-
-        // Act
-        spySut.getNurseClaims();
-
-        // Assert
-        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllNurseClaims();
-    }
-
-    @Test
-    public void test_getDoctorClaims_givenNothing() {
-        // Arrange
-        ClaimService spySut = Mockito.spy(sut);
-
-        // Act
-        spySut.getDoctorClaims();
-
-        // Assert
-        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllDoctorClaims();
-    }
-
-    @Test
-    public void test_getInsurerClaims_givenNothing() {
-        // Arrange
-        ClaimService spySut = Mockito.spy(sut);
-
-        // Act
-        spySut.getInsurerClaims();
-
-        // Assert
-        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllInsurerClaims();
-    }
-
-    @Test
-    public void test_getStaffClaims_givenNothing() {
-        // Arrange
-        ClaimService spySut = Mockito.spy(sut);
-
-        // Act
-        spySut.getStaffClaims();
-
-        // Assert
-        Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllStaffClaims();
-    }
-
-    @Test
     public void test_getClaimsByUserId_givenUserId() {
         // Arrange
         User user = new User("0","testUser","testPassword","test@email.com",
@@ -129,6 +107,16 @@ public class ClaimServiceTest {
 
         // Assert
         Mockito.verify(mockClaimRepo, Mockito.times(1)).findAllByUserId(user.getUserId());
+    }
+
+    @Test
+    public void test_getClaimById_getClaim() {
+        Mockito.when(mockClaimRepo.findById(anyString())).thenReturn(Optional.of(validClaim));
+
+        Ticket ticket = sut.getClaim("valid id");
+
+        Mockito.verify(mockClaimRepo, Mockito.times(1)).findById("valid id");
+        assertEquals(ticket.getClaimId(), validClaim.getClaimId());
     }
 
     @Test

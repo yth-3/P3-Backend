@@ -80,36 +80,13 @@ public class ClaimService {
         return tickets;
     }
 
-    public List<Ticket> getNurseClaims() {
-        List<Ticket> tickets = new LinkedList<>();
-        claimRepo.findAllNurseClaims().iterator().forEachRemaining(
-                claim -> tickets.add(new Ticket(claim))
-        );
-        return tickets;
-    }
+    public Ticket getClaim(String claimId) {
+        Claim claim = claimRepo.findById(claimId).orElse(null);
+        if (claim == null) {
+            return null;
+        }
 
-    public List<Ticket> getDoctorClaims() {
-        List<Ticket> tickets = new LinkedList<>();
-        claimRepo.findAllDoctorClaims().iterator().forEachRemaining(
-                claim -> tickets.add(new Ticket(claim))
-        );
-        return tickets;
-    }
-
-    public List<Ticket> getInsurerClaims() {
-        List<Ticket> tickets = new LinkedList<>();
-        claimRepo.findAllInsurerClaims().iterator().forEachRemaining(
-                claim -> tickets.add(new Ticket(claim))
-        );
-        return tickets;
-    }
-
-    public List<Ticket> getStaffClaims() {
-        List<Ticket> tickets = new LinkedList<>();
-        claimRepo.findAllStaffClaims().iterator().forEachRemaining(
-                claim -> tickets.add(new Ticket(claim))
-        );
-        return tickets;
+        return new Ticket(claim);
     }
 
     public void approveClaim(String claimId, String resolverId, Double settled) {
