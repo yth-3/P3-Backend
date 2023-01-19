@@ -208,7 +208,7 @@ public class UserServiceTest {
         UserService spySut = Mockito.spy(sut);
         String userId = user.getUserId();
 
-        Mockito.doReturn(null).when(mockUserRepo).findAllByUsername(userId);
+        Mockito.doReturn(null).when(mockUserRepo).findByUserId(userId);
 
         // Assert
         assertThrows(InvalidUserException.class, () -> {
@@ -222,13 +222,13 @@ public class UserServiceTest {
         UserService spySut = Mockito.spy(sut);
         String userId = user.getUserId();
 
-        Mockito.doReturn(user).when(mockUserRepo).findAllByUsername(userId);
+        Mockito.doReturn(user).when(mockUserRepo).findByUserId(userId);
 
         // Act
         Principal principal = spySut.getUser(userId);
 
         // Assert
-        Mockito.verify(mockUserRepo, Mockito.times(1)).findAllByUsername(userId);
+        Mockito.verify(mockUserRepo, Mockito.times(1)).findByUserId(userId);
 
         assertEquals(user.getUserId(),principal.getUserId());
         assertEquals(user.getUsername(),principal.getUsername());
