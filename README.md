@@ -94,4 +94,6 @@ Git
 Intellij Idea Community Edition
 
 Simple Logging Facade for Java
+
+DBeaver
 ```
