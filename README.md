@@ -91,7 +91,7 @@ Apache Maven
 
 Git
 
-Intellij Idea Community Edition
+IntelliJ IDEA Community Edition
 
 Simple Logging Facade for Java
 
