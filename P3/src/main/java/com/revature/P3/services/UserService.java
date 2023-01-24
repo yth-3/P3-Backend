@@ -121,6 +121,7 @@ public class UserService {
         return user != null;
     }
 
+    @Transactional
     public void changePassword(String userId, NewPasswordRequest req) {
         userRepository.changeUserPassword(userId, req.getPassword());
     }
