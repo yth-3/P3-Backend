@@ -27,4 +27,8 @@ public interface UserRepository extends CrudRepository<User, String> {
 
     @Query(value = "SELECT * FROM users WHERE role_id = '0'", nativeQuery = true)
     List<User> findAllPatients();
+
+    @Modifying
+    @Query(value = "UPDATE users SET password = ?2 WHERE user_id = ?1", nativeQuery = true)
+    void changeUserPassword(String userId, String password);
 }

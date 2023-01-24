@@ -1,6 +1,7 @@
 package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
+import com.revature.P3.dtos.requests.NewPasswordRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
@@ -118,6 +119,11 @@ public class UserService {
     public boolean isDuplicateEmail(String email) {
         User user = userRepository.findByEmail(email);
         return user != null;
+    }
+
+    @Transactional
+    public void changePassword(String userId, NewPasswordRequest req) {
+        userRepository.changeUserPassword(userId, req.getPassword());
     }
 
     private void createUser(NewUserRequest req, Roles role) {
