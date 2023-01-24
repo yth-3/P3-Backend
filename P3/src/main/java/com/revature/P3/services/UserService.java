@@ -122,7 +122,7 @@ public class UserService {
     }
 
     public void changePassword(String userId, NewPasswordRequest req) {
-        // Not Implemented
+        userRepository.changeUserPassword(userId, req.getPassword());
     }
 
     private void createUser(NewUserRequest req, Roles role) {
