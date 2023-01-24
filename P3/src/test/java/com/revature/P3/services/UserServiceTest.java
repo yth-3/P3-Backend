@@ -1,6 +1,7 @@
 package com.revature.P3.services;
 
 import com.revature.P3.dtos.requests.NewLoginRequest;
+import com.revature.P3.dtos.requests.NewPasswordRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.entities.Role;
@@ -249,5 +250,19 @@ public class UserServiceTest {
 
         // Assert
         Mockito.verify(mockUserRepo, Mockito.times(1)).findAllPatients();
+    }
+
+    @Test
+    public void test_changePassword_givenUserIdAndRequest() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        String userId = user.getUserId();
+        NewPasswordRequest req = new NewPasswordRequest("newPassword");
+
+        // Act
+        spySut.changePassword(userId, req);
+
+        // Assert
+        Mockito.verify(mockUserRepo, Mockito.times(1)).changeUserPassword(userId, req.getPassword());
     }
 }
