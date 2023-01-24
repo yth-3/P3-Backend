@@ -150,4 +150,9 @@ public class UserService {
 
         return user;
     }
+
+    @Transactional
+    public void changeUsername(Principal principal, String username) {
+        userRepository.updateUsernameById(principal.getUserId(), username);
+    }
 }
