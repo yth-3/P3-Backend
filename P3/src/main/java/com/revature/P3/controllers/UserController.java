@@ -1,5 +1,6 @@
 package com.revature.P3.controllers;
 
+import com.revature.P3.dtos.requests.ChangeUsernameRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.enums.Roles;
@@ -8,6 +9,7 @@ import com.revature.P3.services.TokenService;
 import com.revature.P3.services.UserService;
 import com.revature.P3.utils.custom_exceptions.BadGatewayException;
 import com.revature.P3.utils.custom_exceptions.InvalidAuthException;
+import com.revature.P3.utils.custom_exceptions.InvalidRequestException;
 import com.revature.P3.utils.custom_exceptions.InvalidUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -243,6 +246,22 @@ public class UserController {
         return userService.getAllPatients();
     }
 
+    @PutMapping(path="username")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void changeUsername(@RequestBody(required = true) ChangeUsernameRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        if (req == null || req.getUsername() == null) throw new InvalidRequestException("Invalid Request");
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String role = principal.getRole();
+
+        if (role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
+
+        userService.changeUsername(principal, req.getUsername());
+    }
+
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidUserException.class)
     public String handleInvalidUserException (InvalidUserException exception) {
@@ -258,6 +277,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidAuthException.class)
     public String handleInvalidAuthException (InvalidAuthException exception) {
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidRequestException.class)
+    public String handleInvalidRequestException (InvalidRequestException exception) {
         return exception.getMessage();
     }
 }
