@@ -250,4 +250,14 @@ public class UserServiceTest {
         // Assert
         Mockito.verify(mockUserRepo, Mockito.times(1)).findAllPatients();
     }
+
+    @Test
+    public void test_validChangeUsername_changeUsername() {
+        Principal principal = new Principal(user);
+        String newUsername = "new_username";
+
+        sut.changeUsername(principal, newUsername);
+
+        Mockito.verify(mockUserRepo, Mockito.times(1)).updateUsernameById(principal.getUserId(), newUsername);
+    }
 }
