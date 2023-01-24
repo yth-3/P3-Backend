@@ -1,6 +1,7 @@
 package com.revature.P3.controllers;
 
 import com.revature.P3.dtos.requests.ChangeUsernameRequest;
+import com.revature.P3.dtos.requests.NewPasswordRequest;
 import com.revature.P3.dtos.requests.NewUserRequest;
 import com.revature.P3.dtos.responses.Principal;
 import com.revature.P3.enums.Roles;
@@ -260,6 +261,30 @@ public class UserController {
         if (role.equals(Roles.Admin.toString())) throw new InvalidAuthException("Not Authorized");
 
         userService.changeUsername(principal, req.getUsername());
+    }
+
+    @PutMapping(path="password")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void changePassword(@RequestBody NewPasswordRequest req, HttpServletRequest servletReq) {
+        String token = servletReq.getHeader("authorization");
+        if (token == null || token.isEmpty()) throw new InvalidAuthException("Not Authorized");
+
+        if (req.getPassword() == null) {
+            throw new InvalidUserException("Invalid password change request");
+        }
+
+        Principal principal = tokenService.retrievePrincipalFromToken(token);
+        String userId = principal.getUserId();
+
+        req.setPassword(HashService.getHash(req.getPassword()));
+        try {
+            userService.changePassword(userId, req);
+            logger.info("Changed user password.");
+        }
+        catch (Exception exception) {
+            logger.error("Was not able to change user password.");
+            throw exception;
+        }
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
